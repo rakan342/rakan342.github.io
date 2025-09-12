@@ -1,0 +1,752 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>المكتبة - CodeMaster Pro</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #6c63ff;
+            --secondary: #4a40e5;
+            --accent: #ff6b6b;
+            --dark: #1a1a2e;
+            --darker: #0d0d1a;
+            --light: #f8f9fa;
+            --success: #4cc9f0;
+            --warning: #f72585;
+            --gray: #8d99ae;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Tajawal', sans-serif;
+        }
+        
+        body {
+            background: linear-gradient(135deg, var(--darker) 0%, var(--dark) 100%);
+            color: var(--light);
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+        
+        .container {
+            width: 100%;
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+        
+        /* أنماط الشريط العلوي */
+        header {
+            background: rgba(26, 26, 46, 0.95);
+            backdrop-filter: blur(10px);
+            padding: 15px 0;
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+            border-bottom: 1px solid rgba(108, 99, 255, 0.2);
+        }
+        
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: var(--light);
+            text-decoration: none;
+        }
+        
+        .logo i {
+            color: var(--primary);
+            animation: pulse 2s infinite;
+        }
+        
+        .nav-links {
+            display: flex;
+            gap: 25px;
+        }
+        
+        .nav-links a {
+            color: var(--light);
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s;
+            position: relative;
+            padding: 8px 12px;
+            border-radius: 8px;
+        }
+        
+        .nav-links a:hover {
+            color: var(--primary);
+            background: rgba(108, 99, 255, 0.1);
+        }
+        
+        .nav-links a.active {
+            color: var(--primary);
+            background: rgba(108, 99, 255, 0.15);
+        }
+        
+        .nav-links a.active::after {
+            content: '';
+            position: absolute;
+            bottom: -2px;
+            left: 12px;
+            width: calc(100% - 24px);
+            height: 2px;
+            background: var(--primary);
+        }
+        
+        .auth-buttons {
+            display: flex;
+            gap: 15px;
+        }
+        
+        .btn {
+            padding: 10px 20px;
+            border-radius: 30px;
+            border: none;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.3s;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        .btn-primary {
+            background: var(--primary);
+            color: white;
+        }
+        
+        .btn-primary:hover {
+            background: var(--secondary);
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(108, 99, 255, 0.4);
+        }
+        
+        .btn-outline {
+            background: transparent;
+            border: 2px solid var(--primary);
+            color: var(--primary);
+        }
+        
+        .btn-outline:hover {
+            background: var(--primary);
+            color: white;
+            transform: translateY(-2px);
+        }
+        
+        /* أنماط الصفحة */
+        .page-content {
+            padding: 120px 0 50px;
+            min-height: 100vh;
+        }
+        
+        .section-title {
+            text-align: center;
+            font-size: 2.2rem;
+            margin-bottom: 50px;
+            color: var(--light);
+            position: relative;
+        }
+        
+        .section-title::after {
+            content: '';
+            position: absolute;
+            bottom: -15px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 80px;
+            height: 4px;
+            background: var(--primary);
+            border-radius: 2px;
+        }
+        
+        /* مكتبة الخطوط */
+        .library-search {
+            background: rgba(255, 255, 255, 0.05);
+            padding: 20px;
+            border-radius: 10px;
+            margin-bottom: 30px;
+        }
+        
+        .search-box {
+            display: flex;
+            gap: 15px;
+        }
+        
+        .search-box input {
+            flex: 1;
+            padding: 12px 15px;
+            border-radius: 30px;
+            border: none;
+            background: rgba(255, 255, 255, 0.1);
+            color: white;
+        }
+        
+        .library-categories {
+            display: flex;
+            gap: 15px;
+            margin-bottom: 30px;
+            flex-wrap: wrap;
+        }
+        
+        .category-btn {
+            padding: 10px 20px;
+            background: rgba(255, 255, 255, 0.05);
+            border: none;
+            border-radius: 30px;
+            color: var(--light);
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        
+        .category-btn:hover, .category-btn.active {
+            background: var(--primary);
+        }
+        
+        .code-snippets-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+            gap: 25px;
+        }
+        
+        .code-snippet {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 15px;
+            overflow: hidden;
+            transition: all 0.3s;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        .code-snippet:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+            border-color: var(--primary);
+        }
+        
+        .snippet-header {
+            padding: 20px;
+            background: rgba(108, 99, 255, 0.1);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        .snippet-body {
+            padding: 20px;
+        }
+        
+        .snippet-body pre {
+            background: #1e1e1e;
+            padding: 15px;
+            border-radius: 8px;
+            overflow-x: auto;
+            color: #f8f8f2;
+            font-family: 'Courier New', monospace;
+            line-height: 1.5;
+        }
+        
+        .snippet-footer {
+            padding: 15px 20px;
+            background: rgba(0, 0, 0, 0.2);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .snippet-actions {
+            display: flex;
+            gap: 15px;
+        }
+        
+        .snippet-actions button {
+            background: transparent;
+            border: none;
+            color: var(--gray);
+            cursor: pointer;
+            transition: color 0.3s;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+        
+        .snippet-actions button:hover {
+            color: var(--primary);
+        }
+        
+        .snippet-language {
+            background: rgba(76, 201, 240, 0.2);
+            padding: 5px 10px;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            color: var(--success);
+        }
+        
+        /* أنماط الفوتر */
+        footer {
+            background: rgba(26, 26, 46, 0.8);
+            padding: 40px 0;
+            margin-top: 80px;
+        }
+        
+        .footer-content {
+            display: flex;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 40px;
+        }
+        
+        .footer-section {
+            flex: 1;
+            min-width: 250px;
+        }
+        
+        .footer-section h3 {
+            font-size: 1.3rem;
+            margin-bottom: 20px;
+            color: var(--primary);
+        }
+        
+        .footer-section p {
+            color: var(--gray);
+            line-height: 1.6;
+            margin-bottom: 20px;
+        }
+        
+        .footer-links {
+            list-style: none;
+        }
+        
+        .footer-links li {
+            margin-bottom: 15px;
+        }
+        
+        .footer-links a {
+            color: var(--gray);
+            text-decoration: none;
+            transition: color 0.3s;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .footer-links a:hover {
+            color: var(--primary);
+        }
+        
+        .social-links {
+            display: flex;
+            gap: 15px;
+            margin-top: 20px;
+        }
+        
+        .social-links a {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.1);
+            color: var(--light);
+            transition: all 0.3s;
+        }
+        
+        .social-links a:hover {
+            background: var(--primary);
+            transform: translateY(-3px);
+        }
+        
+        .copyright {
+            text-align: center;
+            margin-top: 40px;
+            padding-top: 20px;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            color: var(--gray);
+        }
+        
+        /* أنيميشنز */
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.1); }
+            100% { transform: scale(1); }
+        }
+        
+        /* تصميم متجاوب */
+        @media (max-width: 992px) {
+            .code-snippets-grid {
+                grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            }
+        }
+        
+        @media (max-width: 768px) {
+            .nav-links {
+                display: none;
+            }
+            
+            .section-title {
+                font-size: 1.8rem;
+            }
+            
+            .footer-content {
+                flex-direction: column;
+                gap: 30px;
+            }
+            
+            .search-box {
+                flex-direction: column;
+            }
+        }
+        
+        @media (max-width: 576px) {
+            .page-content {
+                padding: 100px 0 50px;
+            }
+            
+            .btn {
+                padding: 8px 16px;
+                font-size: 0.9rem;
+            }
+            
+            .code-snippets-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- الشريط العلوي -->
+    <header>
+        <div class="container">
+            <nav>
+                <a href="index.html" class="logo">
+                    <i class="fas fa-code"></i>
+                    CodeMaster Pro
+                </a>
+                
+                <div class="nav-links">
+                    <a href="index.html">الرئيسية</a>
+                    <a href="languages.html">اللغات</a>
+                    <a href="projects.html">المشاريع</a>
+                    <a href="community.html">المجتمع</a>
+                    <a href="library.html" class="active">المكتبة</a>
+                    <a href="help.html">المساعدة</a>
+                </div>
+                
+                <div class="auth-buttons">
+                    <button class="btn btn-primary" id="google-login">
+                        <i class="fab fa-google"></i>
+                        تسجيل الدخول
+                    </button>
+                    <button class="btn btn-outline" id="user-profile" style="display: none;">
+                        <i class="fas fa-user"></i>
+                        <span id="username">المستخدم</span>
+                    </button>
+                </div>
+            </nav>
+        </div>
+    </header>
+
+    <!-- محتوى الصفحة -->
+    <section class="page-content">
+        <div class="container">
+            <h2 class="section-title">مكتبة الأكواد البرمجية</h2>
+            
+            <div class="library-search">
+                <div class="search-box">
+                    <input type="text" placeholder="ابحث عن أكواد برمجية...">
+                    <button class="btn btn-primary">
+                        <i class="fas fa-search"></i> بحث
+                    </button>
+                </div>
+            </div>
+            
+            <div class="library-categories">
+                <button class="category-btn active">الكل</button>
+                <button class="category-btn">HTML</button>
+                <button class="category-btn">CSS</button>
+                <button class="category-btn">JavaScript</button>
+                <button class="category-btn">Python</button>
+                <button class="category-btn">C++</button>
+            </div>
+            
+            <div class="code-snippets-grid">
+                <div class="code-snippet">
+                    <div class="snippet-header">
+                        <h3>شريط تنقل متجاوب</h3>
+                    </div>
+                    <div class="snippet-body">
+                        <p>كود لإنشاء شريط تنقل متجاوب مع تأثيرات عند التمرير</p>
+                        <pre><code>.navbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1rem 2rem;
+  background: #6c63ff;
+  position: fixed;
+  top: 0;
+  width: 100%;
+  transition: background 0.3s;
+}
+
+.navbar.scrolled {
+  background: rgba(108, 99, 255, 0.9);
+  backdrop-filter: blur(10px);
+}</code></pre>
+                    </div>
+                    <div class="snippet-footer">
+                        <div class="snippet-actions">
+                            <button><i class="far fa-copy"></i> نسخ</button>
+                            <button><i class="far fa-heart"></i> حفظ</button>
+                        </div>
+                        <span class="snippet-language">CSS</span>
+                    </div>
+                </div>
+                
+                <div class="code-snippet">
+                    <div class="snippet-header">
+                        <h3>نافذة حوار تفاعلية</h3>
+                    </div>
+                    <div class="snippet-body">
+                        <p>كود لإنشاء نافذة حوار تفاعلية باستخدام HTML و JavaScript</p>
+                        <pre><code>&lt;dialog id="myDialog"&gt;
+  &lt;h2&gt;نافذة حوار&lt;/h2&gt;
+  &lt;p&gt;هذه نافذة حوار تفاعلية&lt;/p&gt;
+  &lt;button onclick="document.getElementById('myDialog').close()"&gt;إغلاق&lt;/button&gt;
+&lt;/dialog&gt;
+
+&lt;button onclick="document.getElementById('myDialog').showModal()"&gt;فتح الحوار&lt;/button&gt;</code></pre>
+                    </div>
+                    <div class="snippet-footer">
+                        <div class="snippet-actions">
+                            <button><i class="far fa-copy"></i> نسخ</button>
+                            <button><i class="far fa-heart"></i> حفظ</button>
+                        </div>
+                        <span class="snippet-language">HTML/JS</span>
+                    </div>
+                </div>
+                
+                <div class="code-snippet">
+                    <div class="snippet-header">
+                        <h3>دالة جلب البيانات</h3>
+                    </div>
+                    <div class="snippet-body">
+                        <p>دالة لجلب البيانات من API باستخدام JavaScript</p>
+                        <pre><code>async function fetchData(url) {
+  try {
+    const response = await fetch(url);
+    if (!response.ok) {
+      throw new Error('Network response was not ok');
+    }
+    const data = await response.json();
+    return data;
+  } catch (error) {
+    console.error('Error fetching data:', error);
+    return null;
+  }
+}
+
+// استخدام الدالة
+const data = await fetchData('https://api.example.com/data');
+console.log(data);</code></pre>
+                    </div>
+                    <div class="snippet-footer">
+                        <div class="snippet-actions">
+                            <button><i class="far fa-copy"></i> نسخ</button>
+                            <button><i class="far fa-heart"></i> حفظ</button>
+                        </div>
+                        <span class="snippet-language">JavaScript</span>
+                    </div>
+                </div>
+                
+                <div class="code-snippet">
+                    <div class="snippet-header">
+                        <h3>تصميم بطاقة منتج</h3>
+                    </div>
+                    <div class="snippet-body">
+                        <p>كود لإنشاء بطاقة منتج بتصميم حديث وجذاب</p>
+                        <pre><code>.product-card {
+  background: white;
+  border-radius: 10px;
+  overflow: hidden;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+  transition: transform 0.3s, box-shadow 0.3s;
+}
+
+.product-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
+}
+
+.product-image {
+  width: 100%;
+  height: 200px;
+  object-fit: cover;
+}
+
+.product-info {
+  padding: 20px;
+}
+
+.product-title {
+  font-size: 1.2rem;
+  margin-bottom: 10px;
+  color: #333;
+}
+
+.product-price {
+  font-size: 1.1rem;
+  color: #6c63ff;
+  font-weight: bold;
+}</code></pre>
+                    </div>
+                    <div class="snippet-footer">
+                        <div class="snippet-actions">
+                            <button><i class="far fa-copy"></i> نسخ</button>
+                            <button><i class="far fa-heart"></i> حفظ</button>
+                        </div>
+                        <span class="snippet-language">CSS</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- الفوتر -->
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h3>عن CodeMaster Pro</h3>
+                    <p>منصة تعليمية متكاملة لتعلم البرمجة بمختلف لغاتها، نساعدك لتبدأ رحلتك في عالم البرمجة بطريقة تفاعلية وسهلة.</p>
+                    <div class="social-links">
+                        <a href="#"><i class="fab fa-twitter"></i></a>
+                        <a href="#"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#"><i class="fab fa-instagram"></i></a>
+                        <a href="#"><i class="fab fa-youtube"></i></a>
+                    </div>
+                </div>
+                
+                <div class="footer-section">
+                    <h3>روابط سريعة</h3>
+                    <ul class="footer-links">
+                        <li><a href="index.html"><i class="fas fa-arrow-left"></i> الرئيسية</a></li>
+                        <li><a href="languages.html"><i class="fas fa-arrow-left"></i> اللغات البرمجية</a></li>
+                        <li><a href="projects.html"><i class="fas fa-arrow-left"></i> المشاريع</a></li>
+                        <li><a href="community.html"><i class="fas fa-arrow-left"></i> المجتمع</a></li>
+                        <li><a href="help.html"><i class="fas fa-arrow-left"></i> المساعدة</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-section">
+                    <h3>اتصل بنا</h3>
+                    <p><i class="fas fa-envelope"></i> info@codemaster.com</p>
+                    <p><i class="fas fa-phone"></i> +966 53 223 7703</p>
+                    <p><i class="fas fa-map-marker-alt"></i> الرياض، المملكة العربية السعودية</p>
+                </div>
+            </div>
+            
+            <div class="copyright">
+                <p>© 2023 CodeMaster Pro. جميع الحقوق محفوظة</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // كود JavaScript للتفاعلية
+        document.addEventListener('DOMContentLoaded', function() {
+            // تسجيل الدخول بجوجل
+            document.getElementById('google-login').addEventListener('click', function() {
+                // محاكاة تسجيل الدخول
+                alert('سيتم توجيهك إلى صفحة تسجيل الدخول باستخدام Google');
+                
+                document.getElementById('google-login').style.display = 'none';
+                document.getElementById('user-profile').style.display = 'flex';
+            });
+            
+            // نسخ الأكواد
+            const copyButtons = document.querySelectorAll('.snippet-actions button:first-child');
+            copyButtons.forEach(button => {
+                button.addEventListener('click', function() {
+                    const codeSnippet = this.closest('.code-snippet').querySelector('pre code');
+                    navigator.clipboard.writeText(codeSnippet.textContent);
+                    
+                    alert('تم نسخ الكود بنجاح!');
+                });
+            });
+            
+            // تبديل الفئات
+            const categoryButtons = document.querySelectorAll('.category-btn');
+            categoryButtons.forEach(button => {
+                button.addEventListener('click', function() {
+                    categoryButtons.forEach(btn => btn.classList.remove('active'));
+                    this.classList.add('active');
+                });
+            });
+        });
+    </script>
+
+    <script>
+// الفلاتر: المشاريع
+document.querySelectorAll('.filter-btn').forEach(btn => {
+  btn.addEventListener('click', function() {
+    document.querySelectorAll('.filter-btn').forEach(x => x.classList.remove('active'));
+    btn.classList.add('active');
+    let filter = btn.textContent.trim();
+    document.querySelectorAll('.project-card').forEach(card => {
+      if(filter === "جميع المشاريع" || card.querySelector('.project-language').textContent.includes(filter)) {
+        card.style.display = "block";
+      } else {
+        card.style.display = "none";
+      }
+    });
+  })
+});
+
+// الفلاتر: المكتبة
+document.querySelectorAll('.category-btn').forEach(btn => {
+  btn.addEventListener('click', function() {
+    document.querySelectorAll('.category-btn').forEach(x => x.classList.remove('active'));
+    btn.classList.add('active');
+    let filter = btn.textContent.trim();
+    document.querySelectorAll('.code-snippet').forEach(card => {
+      if(filter === "الكل" || card.querySelector('.snippet-language').textContent.includes(filter)) {
+        card.style.display = "block";
+      } else {
+        card.style.display = "none";
+      }
+    });
+  })
+});
+
+// الفلاتر: المجتمع
+document.querySelectorAll('.tab-btn').forEach(btn => {
+  btn.addEventListener('click', function() {
+    document.querySelectorAll('.tab-btn').forEach(x => x.classList.remove('active'));
+    btn.classList.add('active');
+    let filter = btn.textContent.trim();
+    document.querySelectorAll('.community-card').forEach(card => {
+      if(filter === "جميع المنشورات" || card.querySelector('.community-language').textContent.includes(filter)) {
+        card.style.display = "block";
+      } else {
+        card.style.display = "none";
+      }
+    });
+  })
+});
+</script>
+
+</body>
+</html>

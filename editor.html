@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <title>محرر الأكواد - CodeMaster Pro</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@300;400;500;700&display=swap" rel="stylesheet">
+  <style>
+    body {
+      background: linear-gradient(135deg, #181829 0%, #111119 100%);
+      color: #f8f9fa;
+      font-family: 'Tajawal', sans-serif;
+      min-height: 100vh;
+      margin: 0;
+      padding: 0;
+    }
+    .container {
+      max-width: 1100px;
+      margin: 60px auto;
+      padding: 30px 20px;
+    }
+    .editor-header {
+      background: #232336;
+      color: #fff;
+      border-radius: 12px 12px 0 0;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 12px 18px;
+      border-bottom: 2px solid #34345c;
+    }
+    .editor-header .lang-title {
+      font-weight: bold;
+      font-size: 1.12rem;
+      letter-spacing: 1px;
+    }
+    .editor-actions {
+      display: flex;
+      gap: 14px;
+    }
+    .editor-actions button {
+      background: #6c63ff;
+      color: #fff;
+      border: none;
+      border-radius: 6px;
+      font-size: 1rem;
+      padding: 8px 20px;
+      cursor: pointer;
+      transition: background 0.2s;
+      font-family: 'Tajawal', sans-serif;
+      display: flex;
+      gap: 7px;
+      align-items: center;
+    }
+    .editor-actions button:hover {
+      background: #4a40e5;
+    }
+    .editor-actions button:active {
+      outline: none;
+    }
+    #editorBox {
+      border-radius: 0 0 12px 12px;
+      overflow: hidden;
+      background: #181829;
+      border: 2px solid #34345c;
+      border-top: none;
+    }
+    #monacoEditor {
+      height: 440px;
+      direction: ltr;
+    }
+    .notification {
+      position: fixed;
+      top: 25px;
+      left: 40px;
+      padding: 15px 28px;
+      background: #4cc9f0;
+      color: #fff;
+      border-radius: 7px;
+      font-size: 1.02rem;
+      z-index: 1500;
+      box-shadow: 0 4px 18px rgba(108,99,255,0.09);
+      display: none;
+    }
+    .notification.show {
+      display: block;
+      animation: fadein 0.4s;
+    }
+    @keyframes fadein {
+      from { opacity: 0;}
+      to { opacity: 1;}
+    }
+    /* Responsive */
+    @media (max-width: 750px) {
+      .container {padding: 5px 1vw;}
+      #monacoEditor {height: 260px;}
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="editor-header">
+      <span class="lang-title" id="languageName">HTML</span>
+      <div class="editor-actions">
+        <button id="runCodeBtn"><i class="fas fa-play"></i> تشغيل</button>
+        <button id="copyCodeBtn"><i class="fas fa-copy"></i> نسخ</button>
+        <button id="saveCodeBtn"><i class="fas fa-lock"></i> حفظ</button>
+      </div>
+    </div>
+    <div id="editorBox">
+      <div id="monacoEditor"></div>
+    </div>
+  </div>
+  <div id="notification" class="notification"></div>
+
+  <script src="https://cdn.jsdelivr.net/npm/monaco-editor@0.38.0/min/vs/loader.js"></script>
+  <script>
+    // إعداد اللغة (يمكنك التغيير عبر البرمجة حسب الاختيار السابق)
+    let language = "html";
+
+    // محرر Monaco مع Emmet ودعم الاقتراحات
+    require.config({ paths: { 'vs': 'https://cdn.jsdelivr.net/npm/monaco-editor@0.38.0/min/vs' }});
+    require(['vs/editor/editor.main'], function() {
+      // Emmet للـ HTML وCSS
+      window.editor = monaco.editor.create(document.getElementById('monacoEditor'), {
+        value:  '// اكتب الكود هنا\nconsole.log("مرحباً بالعالم!");',
+        language: language, // يمكنه أن يكون html, css, javascript, python, php, sql, java, cpp
+        theme: "vs-dark",
+        fontSize: 16,
+        minimap: { enabled: false },
+        automaticLayout: true
+      });
+
+      // Emmet shortcuts فقط لـ HTML وCSS
+      if (language === "html" || language === "css") {
+        monaco.languages.registerCompletionItemProvider(language, {
+          provideCompletionItems: function(model, position) {
+            const textUntilPosition = model.getValueInRange({startLineNumber: 1, startColumn: 1, endLineNumber: position.lineNumber, endColumn: position.column});
+            // إذا كتب !
+            if (textUntilPosition.endsWith('!')) {
+              return {
+                suggestions: [{
+                  label: 'HTML5 Emmet',
+                  kind: monaco.languages.CompletionItemKind.Snippet,
+                  insertText: `<!DOCTYPE html>\n<html lang="ar">\n<head>\n  <meta charset="UTF-8">\n  <title>وثيقة جديدة</title>\n</head>\n<body>\n  \n</body>\n</html>`,
+                  documentation: "Emmet: ! + Enter هيكل HTML5",
+                  range: model.getFullModelRange()
+                }]
+              };
+            }
+            return { suggestions: [] };
+          }
+        });
+      }
+      // اقتراحات الكلمات المفتاحية لكل لغة (مثال بسيط)
+      monaco.languages.registerCompletionItemProvider(language, {
+        provideCompletionItems: function(model, position) {
+          const suggestions = [];
+          if (language === "javascript") {
+            suggestions.push({
+              label: 'console.log',
+              kind: monaco.languages.CompletionItemKind.Function,
+              insertText: 'console.log($1);',
+              insertTextRules: monaco.languages.CompletionItemInsertTextRule.InsertAsSnippet,
+              documentation: 'طباعة إلى وحدة التحكم'
+            });
+            suggestions.push({
+              label: 'document.getElementById',
+              kind: monaco.languages.CompletionItemKind.Function,
+              insertText: 'document.getElementById("$1")',
+              documentation: 'الحصول على عنصر بالمعرف'
+            });
+          }
+          if (language === "python") {
+            suggestions.push({
+              label: 'print',
+              kind: monaco.languages.CompletionItemKind.Function,
+              insertText: 'print($1)',
+              documentation: 'طباعة إلى الشاشة'
+            });
+            suggestions.push({
+              label: 'def',
+              kind: monaco.languages.CompletionItemKind.Keyword,
+              insertText: 'def $1():\n    ',
+              documentation: 'دالة جديدة'
+            });
+          }
+          return { suggestions };
+        }
+      });
+
+    });
+
+    // اسم اللغة (يمكنك تغييره ديناميكياً حسب اختيار المستخدم)
+    document.getElementById('languageName').textContent = language.toUpperCase();
+
+    // تشغيل الكود (تجربة فقط - HTML)
+    document.getElementById('runCodeBtn').onclick = function() {
+      showNotification('تم تشغيل الكود بنجاح');
+      // لعرض كود HTML
+      if (language == "html") {
+        let code = window.editor.getValue();
+        let myWin = window.open("", "_blank");
+        myWin.document.write(code);
+        myWin.focus();
+      }
+      // لغات أخرى يمكنك إضافة API خاص بها
+    };
+    // نسخ الكود
+    document.getElementById('copyCodeBtn').onclick = function() {
+      let code = window.editor.getValue();
+      navigator.clipboard.writeText(code);
+      showNotification('تم نسخ الكود');
+    };
+    // حفظ الكود محلياً (تجريبي)
+    document.getElementById('saveCodeBtn').onclick = function() {
+      let code = window.editor.getValue();
+      localStorage.setItem("my_code_sample", code);
+      showNotification('تم حفظ الكود');
+    };
+    // إشعار أنيق
+    function showNotification(txt) {
+      let note = document.getElementById('notification');
+      note.textContent = txt;
+      note.classList.add('show');
+      setTimeout(() => { note.classList.remove('show'); }, 2200);
+    }
+  </script>
+</body>
+</html>

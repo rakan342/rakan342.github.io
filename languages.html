@@ -1,0 +1,672 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>اللغات - CodeMaster Pro</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #6c63ff;
+            --secondary: #4a40e5;
+            --accent: #ff6b6b;
+            --dark: #1a1a2e;
+            --darker: #0d0d1a;
+            --light: #f8f9fa;
+            --success: #4cc9f0;
+            --warning: #f72585;
+            --gray: #8d99ae;
+        }
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Tajawal', sans-serif;
+        }
+        body {
+            background: linear-gradient(135deg, var(--darker) 0%, var(--dark) 100%);
+            color: var(--light);
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+        .container {
+            width: 100%;
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+        header {
+            background: rgba(26, 26, 46, 0.95);
+            backdrop-filter: blur(10px);
+            padding: 15px 0;
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+            border-bottom: 1px solid rgba(108, 99, 255, 0.2);
+        }
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: var(--light);
+            text-decoration: none;
+        }
+        .logo i {
+            color: var(--primary);
+            animation: pulse 2s infinite;
+        }
+        .nav-links {
+            display: flex;
+            gap: 25px;
+        }
+        .nav-links a {
+            color: var(--light);
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s;
+            position: relative;
+            padding: 8px 12px;
+            border-radius: 8px;
+        }
+        .nav-links a:hover {
+            color: var(--primary);
+            background: rgba(108, 99, 255, 0.1);
+        }
+        .nav-links a.active {
+            color: var(--primary);
+            background: rgba(108, 99, 255, 0.15);
+        }
+        .nav-links a.active::after {
+            content: '';
+            position: absolute;
+            bottom: -2px;
+            left: 12px;
+            width: calc(100% - 24px);
+            height: 2px;
+            background: var(--primary);
+        }
+        .auth-buttons {
+            display: flex;
+            gap: 15px;
+        }
+        .btn {
+            padding: 10px 20px;
+            border-radius: 30px;
+            border: none;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.3s;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .btn-primary {
+            background: var(--primary);
+            color: white;
+        }
+        .btn-primary:hover {
+            background: var(--secondary);
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(108, 99, 255, 0.4);
+        }
+        .btn-outline {
+            background: transparent;
+            border: 2px solid var(--primary);
+            color: var(--primary);
+        }
+        .btn-outline:hover {
+            background: var(--primary);
+            color: white;
+            transform: translateY(-2px);
+        }
+        .page-content {
+            padding: 120px 0 50px;
+            min-height: 100vh;
+        }
+        .section-title {
+            text-align: center;
+            font-size: 2.2rem;
+            margin-bottom: 50px;
+            color: var(--light);
+            position: relative;
+        }
+        .section-title::after {
+            content: '';
+            position: absolute;
+            bottom: -15px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 80px;
+            height: 4px;
+            background: var(--primary);
+            border-radius: 2px;
+        }
+        .languages-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 30px;
+            flex-wrap: wrap;
+            gap: 20px;
+        }
+        .languages-search {
+            flex: 1;
+            max-width: 400px;
+        }
+        .search-box {
+            display: flex;
+            gap: 15px;
+        }
+        .search-box input {
+            flex: 1;
+            padding: 12px 15px;
+            border-radius: 30px;
+            border: none;
+            background: rgba(255, 255, 255, 0.1);
+            color: white;
+        }
+        .languages-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 25px;
+        }
+        .language-card {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 15px;
+            padding: 25px;
+            text-align: center;
+            transition: all 0.3s;
+            cursor: pointer;
+            position: relative;
+            overflow: hidden;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        .language-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+            border-color: var(--primary);
+        }
+        .language-card i {
+            font-size: 3rem;
+            margin-bottom: 20px;
+            color: var(--primary);
+        }
+        .language-card h3 {
+            font-size: 1.5rem;
+            margin-bottom: 15px;
+        }
+        .language-card p {
+            color: var(--gray);
+            line-height: 1.6;
+            margin-bottom: 20px;
+        }
+        .language-stats {
+            display: flex;
+            justify-content: space-around;
+            margin-bottom: 20px;
+        }
+        .stat {
+            text-align: center;
+        }
+        .stat-number {
+            font-size: 1.2rem;
+            font-weight: bold;
+            color: var(--primary);
+        }
+        .stat-label {
+            font-size: 0.8rem;
+            color: var(--gray);
+        }
+        .progress-bar {
+            height: 6px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 3px;
+            overflow: hidden;
+            margin-bottom: 10px;
+        }
+        .progress-fill {
+            height: 100%;
+            background: var(--primary);
+            border-radius: 3px;
+        }
+        /* محرر الأكواد */
+        #editorModal {
+            display: none;
+            position: fixed;
+            top: 0; left: 0; right: 0; bottom: 0;
+            z-index: 1300;
+            background: rgba(0,0,0,0.7);
+        }
+        #editorInner {
+            background: #222;
+            max-width: 900px;
+            margin: 40px auto;
+            padding: 30px;
+            border-radius: 16px;
+            color: #f3f3f3;
+            position: relative;
+        }
+        #closeEditorModal {
+            position: absolute;
+            top: 10px; left: 10px;
+            font-size: 24px; cursor: pointer; color: #6c63ff;
+        }
+        #editorLangTitle {font-size: 1.5rem; margin-bottom: 15px;}
+        #monacoEditorBox {height: 450px; border-radius:12px; margin: 15px 0;}
+    </style>
+</head>
+<body>
+    <!-- الشريط العلوي -->
+    <header>
+        <div class="container">
+            <nav>
+                <a href="index.html" class="logo">
+                    <i class="fas fa-code"></i>
+                    CodeMaster Pro
+                </a>
+                <div class="nav-links">
+                    <a href="index.html">الرئيسية</a>
+                    <a href="languages.html" class="active">اللغات</a>
+                    <a href="projects.html">المشاريع</a>
+                    <a href="community.html">المجتمع</a>
+                    <a href="library.html">المكتبة</a>
+                    <a href="help.html">المساعدة</a>
+                </div>
+                <div class="auth-buttons">
+                    <button class="btn btn-primary" id="google-login">
+                        <i class="fab fa-google"></i>
+                        تسجيل الدخول
+                    </button>
+                    <button class="btn btn-outline" id="user-profile" style="display: none;">
+                        <i class="fas fa-user"></i>
+                        <span id="username">المستخدم</span>
+                    </button>
+                </div>
+            </nav>
+        </div>
+    </header>
+    <!-- محتوى الصفحة -->
+    <section class="page-content">
+        <div class="container">
+            <h2 class="section-title">لغات البرمجة</h2>
+            <div class="languages-header">
+                <div class="languages-search">
+                    <div class="search-box">
+                        <input type="text" placeholder="ابحث عن لغة برمجة..." id="searchInput">
+                        <button class="btn btn-primary"><i class="fas fa-search"></i></button>
+                    </div>
+                </div>
+                <div class="filter-buttons">
+                    <button class="btn btn-outline"><i class="fas fa-sort"></i> ترتيب</button>
+                </div>
+            </div>
+            <div class="languages-grid">
+                <!-- اللغات الشهيرة لتعديل المعلومات فقط هنا -->
+                <div class="language-card" data-lang="HTML">
+                    <i class="fab fa-html5"></i>
+                    <h3>HTML</h3>
+                    <p>لغة ترميز النصوص التشعبية لإنشاء هيكل صفحات الويب</p>
+                    <div class="language-stats">
+                        <div class="stat">
+                            <div class="stat-number">92%</div>
+                            <div class="stat-label">إتقان</div>
+                        </div>
+                        <div class="stat">
+                            <div class="stat-number">24</div>
+                            <div class="stat-label">مشروع</div>
+                        </div>
+                    </div>
+                    <div class="progress-bar">
+                        <div class="progress-fill" style="width: 92%;"></div>
+                    </div>
+                    <button class="btn btn-primary open-editor-btn">فتح المحرر</button>
+                </div>
+                <div class="language-card" data-lang="CSS">
+                    <i class="fab fa-css3-alt"></i>
+                    <h3>CSS</h3>
+                    <p>لغة تنسيق لتصميم وتزيين صفحات الويب</p>
+                    <div class="language-stats">
+                        <div class="stat">
+                            <div class="stat-number">85%</div>
+                            <div class="stat-label">إتقان</div>
+                        </div>
+                        <div class="stat">
+                            <div class="stat-number">21</div>
+                            <div class="stat-label">مشروع</div>
+                        </div>
+                    </div>
+                    <div class="progress-bar">
+                        <div class="progress-fill" style="width: 85%;"></div>
+                    </div>
+                    <button class="btn btn-primary open-editor-btn">فتح المحرر</button>
+                </div>
+                <div class="language-card" data-lang="JavaScript">
+                    <i class="fab fa-js"></i>
+                    <h3>JavaScript</h3>
+                    <p>لغة برمجة لتطوير تطبيقات ويب تفاعلية وديناميكية</p>
+                    <div class="language-stats">
+                        <div class="stat">
+                            <div class="stat-number">78%</div>
+                            <div class="stat-label">إتقان</div>
+                        </div>
+                        <div class="stat">
+                            <div class="stat-number">18</div>
+                            <div class="stat-label">مشروع</div>
+                        </div>
+                    </div>
+                    <div class="progress-bar">
+                        <div class="progress-fill" style="width: 78%;"></div>
+                    </div>
+                    <button class="btn btn-primary open-editor-btn">فتح المحرر</button>
+                </div>
+                <div class="language-card" data-lang="Python">
+                    <i class="fab fa-python"></i>
+                    <h3>Python</h3>
+                    <p>لغة برمجة سهلة التعلم لمجالات متعددة مثل الذكاء الاصطناعي</p>
+                    <div class="language-stats">
+                        <div class="stat">
+                            <div class="stat-number">65%</div>
+                            <div class="stat-label">إتقان</div>
+                        </div>
+                        <div class="stat">
+                            <div class="stat-number">12</div>
+                            <div class="stat-label">مشروع</div>
+                        </div>
+                    </div>
+                    <div class="progress-bar"><div class="progress-fill" style="width: 65%;"></div></div>
+                    <button class="btn btn-primary open-editor-btn">فتح المحرر</button>
+                </div>
+                <div class="language-card" data-lang="PHP">
+                    <i class="fab fa-php"></i>
+                    <h3>PHP</h3>
+                    <p>لغة برمجة نصية مخصصة لتطوير تطبيقات الويب الديناميكية</p>
+                    <div class="language-stats">
+                        <div class="stat">
+                            <div class="stat-number">70%</div>
+                            <div class="stat-label">إتقان</div>
+                        </div>
+                        <div class="stat">
+                            <div class="stat-number">9</div>
+                            <div class="stat-label">مشروع</div>
+                        </div>
+                    </div>
+                    <div class="progress-bar"><div class="progress-fill" style="width: 70%;"></div></div>
+                    <button class="btn btn-primary open-editor-btn">فتح المحرر</button>
+                </div>
+                <div class="language-card" data-lang="Java">
+                    <i class="fab fa-java"></i>
+                    <h3>Java</h3>
+                    <p>لغة برمجة قوية ومحمولة لتطوير تطبيقات المؤسسات والأندرويد</p>
+                    <div class="language-stats">
+                        <div class="stat">
+                            <div class="stat-number">60%</div>
+                            <div class="stat-label">إتقان</div>
+                        </div>
+                        <div class="stat">
+                            <div class="stat-number">7</div>
+                            <div class="stat-label">مشروع</div>
+                        </div>
+                    </div>
+                    <div class="progress-bar"><div class="progress-fill" style="width: 60%;"></div></div>
+                    <button class="btn btn-primary open-editor-btn">فتح المحرر</button>
+                </div>
+                <div class="language-card" data-lang="C++">
+                    <i class="fas fa-code"></i>
+                    <h3>C++</h3>
+                    <p>لغة برمجة قوية ومتعددة الاستخدامات لتطوير البرامج والألعاب</p>
+                    <div class="language-stats">
+                        <div class="stat">
+                            <div class="stat-number">55%</div>
+                            <div class="stat-label">إتقان</div>
+                        </div>
+                        <div class="stat">
+                            <div class="stat-number">5</div>
+                            <div class="stat-label">مشروع</div>
+                        </div>
+                    </div>
+                    <div class="progress-bar"><div class="progress-fill" style="width: 55%;"></div></div>
+                    <button class="btn btn-primary open-editor-btn">فتح المحرر</button>
+                </div>
+                <div class="language-card" data-lang="SQL">
+                    <i class="fas fa-database"></i>
+                    <h3>SQL</h3>
+                    <p>لغة الاستعلامات البنيوية لإدارة قواعد البيانات والتعامل معها</p>
+                    <div class="language-stats">
+                        <div class="stat">
+                            <div class="stat-number">80%</div>
+                            <div class="stat-label">إتقان</div>
+                        </div>
+                        <div class="stat">
+                            <div class="stat-number">15</div>
+                            <div class="stat-label">مشروع</div>
+                        </div>
+                    </div>
+                    <div class="progress-bar"><div class="progress-fill" style="width: 80%;"></div></div>
+                    <button class="btn btn-primary open-editor-btn">فتح المحرر</button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- مودال معلومات اللغة -->
+    <div id="languageModal" style="display:none;position:fixed;top:0;right:0;bottom:0;left:0;z-index:1110;background:rgba(0,0,0,0.6);">
+      <div style="background:white;color:#333;max-width:500px;margin:80px auto;padding:30px;border-radius:15px;position:relative;">
+        <span id="closeLangModal" style="position:absolute;top:10px;left:10px;cursor:pointer;font-size:22px;">&times;</span>
+        <h2 id="modalLangName"></h2>
+        <p id="modalLangDesc"></p>
+        <ul id="modalLangDetails" style="margin:15px 0;"></ul>
+        <button id="openEditorBtn" class="btn btn-primary">فتح المحرر</button>
+      </div>
+    </div>
+
+    <!-- مودال محرر الأكواد -->
+    <div id="editorModal">
+      <div id="editorInner">
+        <span id="closeEditorModal">&times;</span>
+        <div id="editorLangTitle">محرر الأكواد</div>
+        <div id="monacoEditorBox"></div>
+      </div>
+    </div>
+
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h3>عن CodeMaster Pro</h3>
+                    <p>منصة تعليمية متكاملة لتعلم البرمجة بمختلف لغاتها، نساعدك لتبدأ رحلتك في عالم البرمجة بطريقة تفاعلية وسهلة.</p>
+                    <div class="social-links">
+                        <a href="#"><i class="fab fa-twitter"></i></a>
+                        <a href="#"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#"><i class="fab fa-instagram"></i></a>
+                        <a href="#"><i class="fab fa-youtube"></i></a>
+                    </div>
+                </div>
+                <div class="footer-section">
+                    <h3>روابط سريعة</h3>
+                    <ul class="footer-links">
+                        <li><a href="index.html"><i class="fas fa-arrow-left"></i> الرئيسية</a></li>
+                        <li><a href="languages.html"><i class="fas fa-arrow-left"></i> اللغات البرمجية</a></li>
+                        <li><a href="projects.html"><i class="fas fa-arrow-left"></i> المشاريع</a></li>
+                        <li><a href="community.html"><i class="fas fa-arrow-left"></i> المجتمع</a></li>
+                        <li><a href="help.html"><i class="fas fa-arrow-left"></i> المساعدة</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h3>اتصل بنا</h3>
+                    <p><i class="fas fa-envelope"></i> info@codemaster.com</p>
+                    <p><i class="fas fa-phone"></i> +966 53 223 7703</p>
+                    <p><i class="fas fa-map-marker-alt"></i> الرياض، المملكة العربية السعودية</p>
+                </div>
+            </div>
+            <div class="copyright">
+                <p>© 2023 CodeMaster Pro. جميع الحقوق محفوظة</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- محرر Monaco Editor -->
+    <script src="https://cdn.jsdelivr.net/npm/monaco-editor@0.38.0/min/vs/loader.js"></script>
+    <script>
+    // معلومات اللغات
+    const languageInfo = {
+      "HTML": {
+        desc: "لغة لهيكلة صفحات الويب.",
+        details: [
+          "مجالات الاستخدام: إنشاء مواقع وتطبيقات ويب.",
+          "نسبة الصعوبة: منخفضة",
+          "تطبيقات: ويب فقط",
+          "مثال شهير: مواقع الشركات."
+        ]
+      },
+      "CSS": {
+        desc: "لغة لتصميم وتنسيق المواقع.",
+        details: [
+          "مجالات الاستخدام: تصميم الواجهات.",
+          "نسبة الصعوبة: منخفضة",
+          "تطبيقات: ويب فقط",
+          "مثال شهير: قوالب ووردبريس."
+        ]
+      },
+      "JavaScript": {
+        desc: "لغة تفاعلية للويب وتطبيقات الجوال.",
+        details: [
+          "مجالات الاستخدام: واجهات تفاعلية وويب وتطبيقات جوال.",
+          "نسبة الصعوبة: متوسطة",
+          "تطبيقات: ويب، جوال، سطح مكتب",
+          "مثال شهير: تطبيقات React وNode.js."
+        ]
+      },
+      "Python": {
+        desc: "لغة سهلة ومتعددة الاستعمالات.",
+        details: [
+          "مجالات الاستخدام: الذكاء الاصطناعي، تطبيقات سطح مكتب، تحليل البيانات.",
+          "نسبة الصعوبة: منخفضة",
+          "تطبيقات: سطح مكتب، ذكاء اصطناعي، ويب",
+          "مثال شهير: أنظمة Django، تطبيقات ML."
+        ]
+      },
+      "C++": {
+        desc: "لغة قوية للألعاب والأنظمة.",
+        details: [
+          "مجالات الاستخدام: تطوير الألعاب، برامج سطح المكتب، الأنظمة المدمجة.",
+          "نسبة الصعوبة: عالية",
+          "تطبيقات: ألعاب، سطح مكتب، أنظمة تشغيل.",
+          "مثال شهير: Unreal Engine."
+        ]
+      },
+      "PHP": {
+        desc: "لغة ويب ديناميكية لإدارة المحتوى.",
+        details: [
+          "مجالات الاستخدام: مواقع ديناميكية، أنظمة إدارة المحتوى.",
+          "نسبة الصعوبة: متوسطة",
+          "تطبيقات: ويب فقط",
+          "مثال شهير: Wordpress وLaravel."
+        ]
+      },
+      "Java": {
+        desc: "لغة قوية وتعمل بأكثر من نظام.",
+        details: [
+          "مجالات الاستخدام: تطبيقات المؤسسات، أندرويد.",
+          "نسبة الصعوبة: متوسطة",
+          "تطبيقات: جوال، سطح مكتب، ويب.",
+          "مثال شهير: تطبيقات أندرويد وSpring."
+        ]
+      },
+      "SQL": {
+        desc: "لغة قواعد بيانات.",
+        details: [
+          "مجالات الاستخدام: إدارة البيانات.",
+          "نسبة الصعوبة: منخفضة",
+          "تطبيقات: قواعد بيانات فقط",
+          "مثال شهير: نظم MySQL."
+        ]
+      }
+    };
+    // إظهار معلومات اللغة عند الضغط عليها
+    document.querySelectorAll('.language-card').forEach(card => {
+      card.addEventListener('click', function(e) {
+        // عدم فتح المحرر بشكل مباشر إذا كان ضغط على زر المحرر
+        if (e.target.classList.contains('open-editor-btn')) return;
+        const langName = card.dataset.lang;
+        const info = languageInfo[langName];
+        if (!info) return;
+        document.getElementById('modalLangName').textContent = langName;
+        document.getElementById('modalLangDesc').textContent = info.desc;
+        document.getElementById('modalLangDetails').innerHTML = info.details.map(d => `<li>${d}</li>`).join("");
+        document.getElementById('languageModal').style.display = 'block';
+        document.getElementById('openEditorBtn').setAttribute('data-lang', langName);
+      });
+    });
+    document.getElementById('closeLangModal').onclick = () => document.getElementById('languageModal').style.display = 'none';
+    document.getElementById('openEditorBtn').onclick = function() {
+      document.getElementById('languageModal').style.display = 'none';
+      openCoderEditor(this.getAttribute('data-lang'));
+    };
+    // زر محرر الأكواد من البطاقة مباشرة
+    document.querySelectorAll('.open-editor-btn').forEach(btn => {
+      btn.addEventListener('click', function(e){
+        e.stopPropagation();
+        const langName = btn.closest('.language-card').dataset.lang;
+        openCoderEditor(langName);
+      });
+    });
+    // مودال محرر الأكواد
+    function openCoderEditor(lang) {
+      document.getElementById('editorModal').style.display = 'block';
+      document.getElementById('editorLangTitle').textContent = 'محرر الأكواد - ' + lang;
+      loadMonaco(lang);
+    }
+    document.getElementById('closeEditorModal').onclick = () => document.getElementById('editorModal').style.display = 'none';
+
+    // محرر مونكو الديناميكي
+    let monacoLoaded = false;
+    function loadMonaco(lang) {
+      if(!monacoLoaded){
+        require.config({ paths: { 'vs': 'https://cdn.jsdelivr.net/npm/monaco-editor@0.38.0/min/vs' }});
+        require(['vs/editor/editor.main'], function() {
+          monacoLoaded = true;
+          setupMonaco(lang);
+        });
+      } else {
+        setupMonaco(lang);
+      }
+    }
+    function setupMonaco(lang) {
+      let langLower = lang == 'C++' ? 'cpp' : lang.toLowerCase();
+      if (window.editorInstance) { window.editorInstance.dispose(); }
+      window.editorInstance = monaco.editor.create(document.getElementById('monacoEditorBox'), {
+        value: "// اكتب الكود هنا بلغة " + lang + "\n",
+        language: langLower,
+        theme: "vs-dark",
+        fontSize: 16,
+        automaticLayout: true
+      });
+    }
+    // البحث عن اللغات
+    document.getElementById('searchInput').addEventListener('input', function() {
+      const val = this.value.toLowerCase();
+      document.querySelectorAll('.language-card').forEach(card => {
+        const name = card.querySelector('h3').textContent.toLowerCase();
+        const desc = card.querySelector('p').textContent.toLowerCase();
+        card.style.display = name.includes(val) || desc.includes(val) ? 'block' : 'none';
+      });
+    });
+    // تسجيل دخول وهمي
+    document.getElementById('google-login').addEventListener('click', function() {
+      alert('سيتم توجيهك إلى تسجيل الدخول باستخدام Google');
+      this.style.display = 'none';
+      document.getElementById('user-profile').style.display = 'flex';
+    });
+    </script>
+</body>
+</html>

@@ -1,0 +1,761 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>المساعدة - CodeMaster Pro</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #6c63ff;
+            --secondary: #4a40e5;
+            --accent: #ff6b6b;
+            --dark: #1a1a2e;
+            --darker: #0d0d1a;
+            --light: #f8f9fa;
+            --success: #4cc9f0;
+            --warning: #f72585;
+            --gray: #8d99ae;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Tajawal', sans-serif;
+        }
+        
+        body {
+            background: linear-gradient(135deg, var(--darker) 0%, var(--dark) 100%);
+            color: var(--light);
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+        
+        .container {
+            width: 100%;
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+        
+        /* أنماط الشريط العلوي */
+        header {
+            background: rgba(26, 26, 46, 0.95);
+            backdrop-filter: blur(10px);
+            padding: 15px 0;
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+            border-bottom: 1px solid rgba(108, 99, 255, 0.2);
+        }
+        
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: var(--light);
+            text-decoration: none;
+        }
+        
+        .logo i {
+            color: var(--primary);
+            animation: pulse 2s infinite;
+        }
+        
+        .nav-links {
+            display: flex;
+            gap: 25px;
+        }
+        
+        .nav-links a {
+            color: var(--light);
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s;
+            position: relative;
+            padding: 8px 12px;
+            border-radius: 8px;
+        }
+        
+        .nav-links a:hover {
+            color: var(--primary);
+            background: rgba(108, 99, 255, 0.1);
+        }
+        
+        .nav-links a.active {
+            color: var(--primary);
+            background: rgba(108, 99, 255, 0.15);
+        }
+        
+        .nav-links a.active::after {
+            content: '';
+            position: absolute;
+            bottom: -2px;
+            left: 12px;
+            width: calc(100% - 24px);
+            height: 2px;
+            background: var(--primary);
+        }
+        
+        .auth-buttons {
+            display: flex;
+            gap: 15px;
+        }
+        
+        .btn {
+            padding: 10px 20px;
+            border-radius: 30px;
+            border: none;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.3s;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        .btn-primary {
+            background: var(--primary);
+            color: white;
+        }
+        
+        .btn-primary:hover {
+            background: var(--secondary);
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(108, 99, 255, 0.4);
+        }
+        
+        .btn-outline {
+            background: transparent;
+            border: 2px solid var(--primary);
+            color: var(--primary);
+        }
+        
+        .btn-outline:hover {
+            background: var(--primary);
+            color: white;
+            transform: translateY(-2px);
+        }
+        
+        /* أنماط الصفحة */
+        .page-content {
+            padding: 120px 0 50px;
+            min-height: 100vh;
+        }
+        
+        .section-title {
+            text-align: center;
+            font-size: 2.2rem;
+            margin-bottom: 50px;
+            color: var(--light);
+            position: relative;
+        }
+        
+        .section-title::after {
+            content: '';
+            position: absolute;
+            bottom: -15px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 80px;
+            height: 4px;
+            background: var(--primary);
+            border-radius: 2px;
+        }
+        
+        /* المساعدة */
+        .help-categories {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 25px;
+            margin-bottom: 50px;
+        }
+        
+        .help-category {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 15px;
+            padding: 25px;
+            text-align: center;
+            transition: all 0.3s;
+            cursor: pointer;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        .help-category:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+            border-color: var(--primary);
+        }
+        
+        .help-category i {
+            font-size: 3rem;
+            margin-bottom: 20px;
+            color: var(--primary);
+        }
+        
+        .help-category h3 {
+            font-size: 1.5rem;
+            margin-bottom: 15px;
+        }
+        
+        .help-category p {
+            color: var(--gray);
+            line-height: 1.6;
+        }
+        
+        /* الأسئلة الشائعة */
+        .faq-section {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 15px;
+            padding: 30px;
+            margin-bottom: 40px;
+        }
+        
+        .faq-section h3 {
+            margin-bottom: 25px;
+            color: var(--primary);
+        }
+        
+        .faq-item {
+            margin-bottom: 20px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            padding-bottom: 20px;
+        }
+        
+        .faq-question {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            cursor: pointer;
+            padding: 10px 0;
+        }
+        
+        .faq-question h4 {
+            font-size: 1.1rem;
+            color: var(--light);
+        }
+        
+        .faq-answer {
+            padding: 15px;
+            background: rgba(255, 255, 255, 0.03);
+            border-radius: 8px;
+            margin-top: 10px;
+            display: none;
+        }
+        
+        .faq-answer p {
+            color: var(--gray);
+            line-height: 1.6;
+        }
+        
+        .faq-item.active .faq-answer {
+            display: block;
+        }
+        
+        /* اتصل بنا */
+        .contact-section {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 15px;
+            padding: 30px;
+        }
+        
+        .contact-section h3 {
+            margin-bottom: 25px;
+            color: var(--primary);
+        }
+        
+        .contact-info {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 25px;
+            margin-bottom: 30px;
+        }
+        
+        .contact-item {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+        
+        .contact-icon {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background: rgba(108, 99, 255, 0.1);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--primary);
+            font-size: 1.2rem;
+        }
+        
+        .contact-details h4 {
+            margin-bottom: 5px;
+            color: var(--light);
+        }
+        
+        .contact-details p {
+            color: var(--gray);
+        }
+        
+        /* أنماط الفوتر */
+        footer {
+            background: rgba(26, 26, 46, 0.8);
+            padding: 40px 0;
+            margin-top: 80px;
+        }
+        
+        .footer-content {
+            display: flex;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 40px;
+        }
+        
+        .footer-section {
+            flex: 1;
+            min-width: 250px;
+        }
+        
+        .footer-section h3 {
+            font-size: 1.3rem;
+            margin-bottom: 20px;
+            color: var(--primary);
+        }
+        
+        .footer-section p {
+            color: var(--gray);
+            line-height: 1.6;
+            margin-bottom: 20px;
+        }
+        
+        .footer-links {
+            list-style: none;
+        }
+        
+        .footer-links li {
+            margin-bottom: 15px;
+        }
+        
+        .footer-links a {
+            color: var(--gray);
+            text-decoration: none;
+            transition: color 0.3s;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .footer-links a:hover {
+            color: var(--primary);
+        }
+        
+        .social-links {
+            display: flex;
+            gap: 15px;
+            margin-top: 20px;
+        }
+        
+        .social-links a {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.1);
+            color: var(--light);
+            transition: all 0.3s;
+        }
+        
+        .social-links a:hover {
+            background: var(--primary);
+            transform: translateY(-3px);
+        }
+        
+        .copyright {
+            text-align: center;
+            margin-top: 40px;
+            padding-top: 20px;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            color: var(--gray);
+        }
+        
+        /* أنيميشنز */
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.1); }
+            100% { transform: scale(1); }
+        }
+        
+        /* تصميم متجاوب */
+        @media (max-width: 992px) {
+            .help-categories {
+                grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            }
+        }
+        
+        @media (max-width: 768px) {
+            .nav-links {
+                display: none;
+            }
+            
+            .section-title {
+                font-size: 1.8rem;
+            }
+            
+            .footer-content {
+                flex-direction: column;
+                gap: 30px;
+            }
+            
+            .contact-info {
+                grid-template-columns: 1fr;
+            }
+        }
+        
+        @media (max-width: 576px) {
+            .page-content {
+                padding: 100px 0 50px;
+            }
+            
+            .btn {
+                padding: 8px 16px;
+                font-size: 0.9rem;
+            }
+            
+            .help-categories {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- الشريط العلوي -->
+    <header>
+        <div class="container">
+            <nav>
+                <a href="index.html" class="logo">
+                    <i class="fas fa-code"></i>
+                    CodeMaster Pro
+                </a>
+                
+                <div class="nav-links">
+                    <a href="index.html">الرئيسية</a>
+                    <a href="languages.html">اللغات</a>
+                    <a href="projects.html">المشاريع</a>
+                    <a href="community.html">المجتمع</a>
+                    <a href="library.html">المكتبة</a>
+                    <a href="help.html" class="active">المساعدة</a>
+                </div>
+                
+                <div class="auth-buttons">
+                    <button class="btn btn-primary" id="google-login">
+                        <i class="fab fa-google"></i>
+                        تسجيل الدخول
+                    </button>
+                    <button class="btn btn-outline" id="user-profile" style="display: none;">
+                        <i class="fas fa-user"></i>
+                        <span id="username">المستخدم</span>
+                    </button>
+                </div>
+            </nav>
+        </div>
+    </header>
+
+    <!-- محتوى الصفحة -->
+    <section class="page-content">
+        <div class="container">
+            <h2 class="section-title">مركز المساعدة</h2>
+            
+            <div class="help-categories">
+                <div class="help-category">
+                    <i class="fas fa-question-circle"></i>
+                    <h3>الأسئلة الشائعة</h3>
+                    <p>إجابات على الأسئلة الأكثر شيوعاً حول استخدام المنصة</p>
+                </div>
+                
+                <div class="help-category">
+                    <i class="fas fa-book"></i>
+                    <h3>الدروس التعليمية</h3>
+                    <p>دروس مفصلة لمساعدتك في استخدام جميع ميزات المنصة</p>
+                </div>
+                
+                <div class="help-category">
+                    <i class="fas fa-video"></i>
+                    <h3>فيديو تعليمي</h3>
+                    <p>مقاطع فيديو توضح كيفية استخدام المنصة خطوة بخطوة</p>
+                </div>
+            </div>
+            
+            <div class="faq-section">
+                <h3>الأسئلة الشائعة</h3>
+                
+                <div class="faq-item">
+                    <div class="faq-question">
+                        <h4>كيف أسجل الدخول باستخدام Google؟</h4>
+                        <i class="fas fa-chevron-down"></i>
+                    </div>
+                    <div class="faq-answer">
+                        <p>لتسجيل الدخول باستخدام Google، اتبع الخطوات التالية:</p>
+                        <ol>
+                            <li>انقر على زر "تسجيل الدخول" في أعلى الصفحة</li>
+                            <li>اختر "تسجيل الدخول باستخدام Google"</li>
+                            <li>سوف يتم توجيهك إلى صفحة المصادقة الخاصة بـ Google</li>
+                            <li>اختر الحساب الذي تريد استخدامه أو أدخل بيانات الاعتماد الخاصة بك</li>
+                            <li>انقر على "الموافقة" للسماح للمنصة بالوصول إلى معلوماتك الأساسية</li>
+                            <li>سيتم توجيهك مرة أخرى إلى المنصة وقد قمت بتسجيل الدخول بنجاح</li>
+                        </ol>
+                    </div>
+                </div>
+                
+                <div class="faq-item">
+                    <div class="faq-question">
+                        <h4>كيف أحفظ مشاريعي؟</h4>
+                        <i class="fas fa-chevron-down"></i>
+                    </div>
+                    <div class="faq-answer">
+                        <p>لحفظ مشروعك، يجب أولاً تسجيل الدخول إلى حسابك. بعد ذلك:</p>
+                        <ol>
+                            <li>افتح المحرر واكتب الكود الخاص بك</li>
+                            <li>انقر على زر "حفظ" في شريط أدوات المحرر</li>
+                            <li>أدخل اسمًا للمشروع ووصفًا اختياريًا</li>
+                            <li>اختر لغة البرمجة المستخدمة في المشروع</li>
+                            <li>انقر على "تأكيد" لحفظ المشروع</li>
+                        </ol>
+                        <p>سيتم حفظ مشروعك تلقائيًا في قسم "المشاريع" ويمكنك الوصول إليه في أي وقت.</p>
+                    </div>
+                </div>
+                
+                <div class="faq-item">
+                    <div class="faq-question">
+                        <h4>هل يمكنني استخدام أكثر من لغة في مشروع واحد؟</h4>
+                        <i class="fas fa-chevron-down"></i>
+                    </div>
+                    <div class="faq-answer">
+                        <p>نعم، يدعم محررنا استخدام عدة لغات في نفس المشروع. يمكنك:</p>
+                        <ul>
+                            <li>إنشاء ملفات بلغات مختلفة داخل نفس المشروع</li>
+                            <li>استخدام رموز لغة معينة داخل ملفات لغة أخرى (مثل استخدام HTML داخل ملف JavaScript)</li>
+                            <li>التبديل بين أنواع الملفات المختلفة من خلال تغيير الامتداد</li>
+                        </ul>
+                        <p>المحرر سيتعرف تلقائيًا على نوع المحتوى ويوفر تمييز الصyntax المناسب لكل جزء من الكود.</p>
+                    </div>
+                </div>
+                
+                <div class="faq-item">
+                    <div class="faq-question">
+                        <h4>كيف أشارك مشاريعي مع الآخرين؟</h4>
+                        <i class="fas fa-chevron-down"></i>
+                    </div>
+                    <div class="faq-answer">
+                        <p>لمشاركة مشروعك مع الآخرين:</p>
+                        <ol>
+                            <li>اذهب إلى صفحة "المشاريع"</li>
+                            <li>انقر على المشروع الذي تريد مشاركته</li>
+                            <li>انقر على زر "مشاركة"</li>
+                            <li>اختر whether تريد إنشاء رابط عام أو خاص</li>
+                            <li>انسخ الرابط وشاركه مع الآخرين</li>
+                        </ol>
+                        <p>يمكن للأشخاص الذين يملكون الرابط عرض المشروع ولكن لا يمكنهم تعديله إلا إذا منحتهم الصلاحية.</p>
+                    </div>
+                </div>
+                
+                <div class="faq-item">
+                    <div class="faq-question">
+                        <h4>كيف أستخدم محرر الأكواد بشكل فعال؟</h4>
+                        <i class="fas fa-chevron-down"></i>
+                    </div>
+                    <div class="faq-answer">
+                        <p>محرر الأكواد لدينا يدعم العديد من الميزات التي تجعل البرمجة أسهل:</p>
+                        <ul>
+                            <li><strong>الإكمال التلقائي:</strong> ابدأ بكتابة أي كود وسيظهر لك اقتراحات تلقائية</li>
+                            <li><strong>تمييز الصyntax:</strong> يتم تلوين الأكواد تلقائيًا بناءً على اللغة المستخدمة</li>
+                            <li><strong>التنبيه بالأخطاء:</strong> يتم اكتشاف الأخطاء النحوية وإظهارها لك</li>
+                            <li><strong>التنسيق التلقائي:</strong> يمكنك تنسيق الكود تلقائيًا بزر واحد</li>
+                            <li><strong>إعادة تسمية الرموز:</strong> غير اسم متغير وسيتم تحديثه في جميع أنحاء المشروع</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="contact-section">
+                <h3>اتصل بنا</h3>
+                
+                <div class="contact-info">
+                    <div class="contact-item">
+                        <div class="contact-icon">
+                            <i class="fas fa-envelope"></i>
+                        </div>
+                        <div class="contact-details">
+                            <h4>البريد الإلكتروني</h4>
+                            <p>support@codemaster.com</p>
+                        </div>
+                    </div>
+                    
+                    <div class="contact-item">
+                        <div class="contact-icon">
+                            <i class="fas fa-phone"></i>
+                        </div>
+                        <div class="contact-details">
+                            <h4>الهاتف</h4>
+                            <p>+966 53 223 7703</p>
+                        </div>
+                    </div>
+                    
+                    <div class="contact-item">
+                        <div class="contact-icon">
+                            <i class="fas fa-clock"></i>
+                        </div>
+                        <div class="contact-details">
+                            <h4>ساعات العمل</h4>
+                            <p>الأحد - الخميس: 8 صباحًا - 5 مساءً</p>
+                        </div>
+                    </div>
+                    
+                    <div class="contact-item">
+                        <div class="contact-icon">
+                            <i class="fas fa-map-marker-alt"></i>
+                        </div>
+                        <div class="contact-details">
+                            <h4>الموقع</h4>
+                            <p>الرياض، المملكة العربية السعودية</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="contact-form">
+                    <h4>أرسل رسالة</h4>
+                    <form>
+                        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin-bottom: 20px;">
+                            <div>
+                                <label for="name">الاسم</label>
+                                <input type="text" id="name" style="width: 100%; padding: 12px; border-radius: 8px; border: 1px solid rgba(255, 255, 255, 0.1); background: rgba(255, 255, 255, 0.05); color: white;">
+                            </div>
+                            <div>
+                                <label for="email">البريد الإلكتروني</label>
+                                <input type="email" id="email" style="width: 100%; padding: 12px; border-radius: 8px; border: 1px solid rgba(255, 255, 255, 0.1); background: rgba(255, 255, 255, 0.05); color: white;">
+                            </div>
+                        </div>
+                        
+                        <div style="margin-bottom: 20px;">
+                            <label for="subject">الموضوع</label>
+                            <input type="text" id="subject" style="width: 100%; padding: 12px; border-radius: 8px; border: 1px solid rgba(255, 255, 255, 0.1); background: rgba(255, 255, 255, 0.05); color: white;">
+                        </div>
+                        
+                        <div style="margin-bottom: 20px;">
+                            <label for="message">الرسالة</label>
+                            <textarea id="message" rows="5" style="width: 100%; padding: 12px; border-radius: 8px; border: 1px solid rgba(255, 255, 255, 0.1); background: rgba(255, 255, 255, 0.05); color: white;"></textarea>
+                        </div>
+                        
+                        <button type="submit" class="btn btn-primary">إرسال الرسالة</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- الفوتر -->
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h3>عن CodeMaster Pro</h3>
+                    <p>منصة تعليمية متكاملة لتعلم البرمجة بمختلف لغاتها، نساعدك لتبدأ رحلتك في عالم البرمجة بطريقة تفاعلية وسهلة.</p>
+                    <div class="social-links">
+                        <a href="#"><i class="fab fa-twitter"></i></a>
+                        <a href="#"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#"><i class="fab fa-instagram"></i></a>
+                        <a href="#"><i class="fab fa-youtube"></i></a>
+                    </div>
+                </div>
+                
+                <div class="footer-section">
+                    <h3>روابط سريعة</h3>
+                    <ul class="footer-links">
+                        <li><a href="index.html"><i class="fas fa-arrow-left"></i> الرئيسية</a></li>
+                        <li><a href="languages.html"><i class="fas fa-arrow-left"></i> اللغات البرمجية</a></li>
+                        <li><a href="projects.html"><i class="fas fa-arrow-left"></i> المشاريع</a></li>
+                        <li><a href="community.html"><i class="fas fa-arrow-left"></i> المجتمع</a></li>
+                        <li><a href="help.html"><i class="fas fa-arrow-left"></i> المساعدة</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-section">
+                    <h3>اتصل بنا</h3>
+                    <p><i class="fas fa-envelope"></i> info@codemaster.com</p>
+                    <p><i class="fas fa-phone"></i> +966 53 223 7703</p>
+                    <p><i class="fas fa-map-marker-alt"></i> الرياض، المملكة العربية السعودية</p>
+                </div>
+            </div>
+            
+            <div class="copyright">
+                <p>© 2023 CodeMaster Pro. جميع الحقوق محفوظة</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // كود JavaScript للتفاعلية
+        document.addEventListener('DOMContentLoaded', function() {
+            // تسجيل الدخول بجوجل
+            document.getElementById('google-login').addEventListener('click', function() {
+                // محاكاة تسجيل الدخول
+                alert('سيتم توجيهك إلى صفحة تسجيل الدخول باستخدام Google');
+                
+                document.getElementById('google-login').style.display = 'none';
+                document.getElementById('user-profile').style.display = 'flex';
+            });
+            
+            // تفعيل الأسئلة الشائعة
+            const faqQuestions = document.querySelectorAll('.faq-question');
+            faqQuestions.forEach(question => {
+                question.addEventListener('click', function() {
+                    const faqItem = this.parentElement;
+                    faqItem.classList.toggle('active');
+                    
+                    const icon = this.querySelector('i');
+                    if (faqItem.classList.contains('active')) {
+                        icon.classList.remove('fa-chevron-down');
+                        icon.classList.add('fa-chevron-up');
+                    } else {
+                        icon.classList.remove('fa-chevron-up');
+                        icon.classList.add('fa-chevron-down');
+                    }
+                });
+            });
+            
+            // إرسال نموذج الاتصال
+            const contactForm = document.querySelector('.contact-form form');
+            contactForm.addEventListener('submit', function(e) {
+                e.preventDefault();
+                
+                const name = document.getElementById('name').value;
+                const email = document.getElementById('email').value;
+                const subject = document.getElementById('subject').value;
+                const message = document.getElementById('message').value;
+                
+                if (!name || !email || !subject || !message) {
+                    alert('يرجى ملء جميع الحقول المطلوبة');
+                    return;
+                }
+                
+                alert('شكراً لك! تم استلام رسالتك وسيتم الرد عليك قريباً.');
+                contactForm.reset();
+            });
+        });
+    </script>
+</body>
+</html>
