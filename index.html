@@ -18,28 +18,28 @@
             --warning: #f72585;
             --gray: #8d99ae;
         }
-        
+
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
             font-family: 'Tajawal', sans-serif;
         }
-        
+
         body {
             background: linear-gradient(135deg, var(--darker) 0%, var(--dark) 100%);
             color: var(--light);
             min-height: 100vh;
             overflow-x: hidden;
         }
-        
+
         .container {
             width: 100%;
             max-width: 1400px;
             margin: 0 auto;
             padding: 0 20px;
         }
-        
+
         /* أنماط الشريط العلوي */
         header {
             background: rgba(26, 26, 46, 0.95);
@@ -52,13 +52,13 @@
             box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
             border-bottom: 1px solid rgba(108, 99, 255, 0.2);
         }
-        
+
         nav {
             display: flex;
             justify-content: space-between;
             align-items: center;
         }
-        
+
         .logo {
             display: flex;
             align-items: center;
@@ -68,17 +68,17 @@
             color: var(--light);
             text-decoration: none;
         }
-        
+
         .logo i {
             color: var(--primary);
             animation: pulse 2s infinite;
         }
-        
+
         .nav-links {
             display: flex;
             gap: 25px;
         }
-        
+
         .nav-links a {
             color: var(--light);
             text-decoration: none;
@@ -88,17 +88,17 @@
             padding: 8px 12px;
             border-radius: 8px;
         }
-        
+
         .nav-links a:hover {
             color: var(--primary);
             background: rgba(108, 99, 255, 0.1);
         }
-        
+
         .nav-links a.active {
             color: var(--primary);
             background: rgba(108, 99, 255, 0.15);
         }
-        
+
         .nav-links a.active::after {
             content: '';
             position: absolute;
@@ -107,13 +107,14 @@
             width: calc(100% - 24px);
             height: 2px;
             background: var(--primary);
+            border-radius: 2px;
         }
-        
+
         .auth-buttons {
             display: flex;
             gap: 15px;
         }
-        
+
         .btn {
             padding: 10px 20px;
             border-radius: 30px;
@@ -125,30 +126,30 @@
             align-items: center;
             gap: 8px;
         }
-        
+
         .btn-primary {
             background: var(--primary);
             color: white;
         }
-        
+
         .btn-primary:hover {
             background: var(--secondary);
             transform: translateY(-2px);
             box-shadow: 0 5px 15px rgba(108, 99, 255, 0.4);
         }
-        
+
         .btn-outline {
             background: transparent;
             border: 2px solid var(--primary);
             color: var(--primary);
         }
-        
+
         .btn-outline:hover {
             background: var(--primary);
             color: white;
             transform: translateY(-2px);
         }
-        
+
         /* أنماط قسم البطل */
         .hero {
             padding: 150px 0 100px;
@@ -156,7 +157,7 @@
             position: relative;
             overflow: hidden;
         }
-        
+
         .hero::before {
             content: '';
             position: absolute;
@@ -169,7 +170,7 @@
             filter: blur(50px);
             z-index: -1;
         }
-        
+
         .hero::after {
             content: '';
             position: absolute;
@@ -182,7 +183,7 @@
             filter: blur(50px);
             z-index: -1;
         }
-        
+
         .hero h1 {
             font-size: 3.5rem;
             margin-bottom: 20px;
@@ -192,7 +193,7 @@
             color: transparent;
             animation: fadeIn 1s ease-out;
         }
-        
+
         .hero p {
             font-size: 1.2rem;
             color: var(--gray);
@@ -200,12 +201,12 @@
             margin: 0 auto 40px;
             line-height: 1.6;
         }
-        
+
         /* أنماط اختيار اللغة */
         .languages {
             padding: 60px 0;
         }
-        
+
         .section-title {
             text-align: center;
             font-size: 2.2rem;
@@ -213,7 +214,7 @@
             color: var(--light);
             position: relative;
         }
-        
+
         .section-title::after {
             content: '';
             position: absolute;
@@ -225,14 +226,14 @@
             background: var(--primary);
             border-radius: 2px;
         }
-        
+
         .language-grid {
             display: grid;
             grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
             gap: 25px;
             margin-top: 30px;
         }
-        
+
         .language-card {
             background: rgba(255, 255, 255, 0.05);
             border-radius: 15px;
@@ -244,35 +245,35 @@
             overflow: hidden;
             border: 1px solid rgba(255, 255, 255, 0.1);
         }
-        
+
         .language-card:hover {
             transform: translateY(-10px);
             box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
             border-color: var(--primary);
         }
-        
+
         .language-card i {
             font-size: 3rem;
             margin-bottom: 20px;
             color: var(--primary);
         }
-        
+
         .language-card h3 {
             font-size: 1.5rem;
             margin-bottom: 15px;
         }
-        
+
         .language-card p {
             color: var(--gray);
             line-height: 1.6;
         }
-        
+
         /* أنماط المحرر */
         .editor-section {
             padding: 60px 0;
             display: none;
         }
-        
+
         .editor-container {
             background: #1e1e1e;
             border-radius: 10px;
@@ -280,7 +281,7 @@
             box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
             margin-bottom: 30px;
         }
-        
+
         .editor-header {
             background: #2d2d2d;
             padding: 10px 15px;
@@ -288,7 +289,7 @@
             justify-content: space-between;
             align-items: center;
         }
-        
+
         .editor-actions button {
             background: var(--primary);
             color: white;
@@ -299,11 +300,11 @@
             margin-left: 10px;
             transition: background 0.3s;
         }
-        
+
         .editor-actions button:hover {
             background: var(--secondary);
         }
-        
+
         #code-editor {
             width: 100%;
             min-height: 400px;
@@ -316,7 +317,7 @@
             resize: none;
             line-height: 1.5;
         }
-        
+
         /* أنماط الأكواد الشائعة */
         .common-codes {
             background: rgba(255, 255, 255, 0.03);
@@ -324,13 +325,13 @@
             padding: 25px;
             margin-top: 40px;
         }
-        
+
         .common-codes h3 {
             font-size: 1.5rem;
             margin-bottom: 20px;
             color: var(--success);
         }
-        
+
         .code-snippet {
             background: #2d2d2d;
             border-radius: 8px;
@@ -340,23 +341,23 @@
             transition: all 0.3s;
             border-left: 3px solid var(--primary);
         }
-        
+
         .code-snippet:hover {
             background: #3d3d3d;
             transform: translateX(5px);
         }
-        
+
         .code-snippet h4 {
             color: var(--accent);
             margin-bottom: 10px;
         }
-        
+
         .code-snippet p {
             color: var(--gray);
             margin-bottom: 15px;
             line-height: 1.5;
         }
-        
+
         .code-snippet pre {
             background: #1e1e1e;
             padding: 10px;
@@ -364,46 +365,46 @@
             overflow-x: auto;
             color: #f8f8f2;
         }
-        
+
         /* أنماط الفوتر */
         footer {
             background: rgba(26, 26, 46, 0.8);
             padding: 40px 0;
             margin-top: 80px;
         }
-        
+
         .footer-content {
             display: flex;
             justify-content: space-between;
             flex-wrap: wrap;
             gap: 40px;
         }
-        
+
         .footer-section {
             flex: 1;
             min-width: 250px;
         }
-        
+
         .footer-section h3 {
             font-size: 1.3rem;
             margin-bottom: 20px;
             color: var(--primary);
         }
-        
+
         .footer-section p {
             color: var(--gray);
             line-height: 1.6;
             margin-bottom: 20px;
         }
-        
+
         .footer-links {
             list-style: none;
         }
-        
+
         .footer-links li {
             margin-bottom: 15px;
         }
-        
+
         .footer-links a {
             color: var(--gray);
             text-decoration: none;
@@ -412,17 +413,17 @@
             align-items: center;
             gap: 10px;
         }
-        
+
         .footer-links a:hover {
             color: var(--primary);
         }
-        
+
         .social-links {
             display: flex;
             gap: 15px;
             margin-top: 20px;
         }
-        
+
         .social-links a {
             display: flex;
             align-items: center;
@@ -434,12 +435,12 @@
             color: var(--light);
             transition: all 0.3s;
         }
-        
+
         .social-links a:hover {
             background: var(--primary);
             transform: translateY(-3px);
         }
-        
+
         .copyright {
             text-align: center;
             margin-top: 40px;
@@ -447,91 +448,91 @@
             border-top: 1px solid rgba(255, 255, 255, 0.1);
             color: var(--gray);
         }
-        
+
         /* أنيميشنز */
         @keyframes pulse {
             0% { transform: scale(1); }
             50% { transform: scale(1.1); }
             100% { transform: scale(1); }
         }
-        
+
         @keyframes fadeIn {
             from { opacity: 0; transform: translateY(20px); }
             to { opacity: 1; transform: translateY(0); }
         }
-        
+
         .animated {
             opacity: 0;
             transform: translateY(20px);
             transition: opacity 0.5s, transform 0.5s;
         }
-        
+
         .visible {
             opacity: 1;
             transform: translateY(0);
         }
-        
+
         /* تصميم متجاوب */
         @media (max-width: 992px) {
             .hero h1 {
                 font-size: 2.8rem;
             }
-            
+
             .language-grid {
                 grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
             }
         }
-        
+
         @media (max-width: 768px) {
             .nav-links {
                 display: none;
             }
-            
+
             .hero h1 {
                 font-size: 2.2rem;
             }
-            
+
             .hero p {
                 font-size: 1rem;
             }
-            
+
             .section-title {
                 font-size: 1.8rem;
             }
-            
+
             .footer-content {
                 flex-direction: column;
                 gap: 30px;
             }
         }
-        
+
         @media (max-width: 576px) {
             .hero {
                 padding: 120px 0 80px;
             }
-            
+
             .hero h1 {
                 font-size: 1.8rem;
             }
-            
+
             .btn {
                 padding: 8px 16px;
                 font-size: 0.9rem;
             }
-            
+
             .language-card {
                 padding: 20px;
             }
-            
+
             .language-card i {
                 font-size: 2.5rem;
             }
-            
+
             .language-card h3 {
                 font-size: 1.3rem;
             }
         }
-        
+
         /* إشعارات */
         .notification {
             position: fixed;
@@ -546,14 +547,13 @@
             transform: translateX(100%);
             transition: transform 0.3s;
         }
-        
+
         .notification.show {
             transform: translateX(0);
         }
     </style>
 </head>
 <body>
-    <!-- الشريط العلوي -->
     <header>
         <div class="container">
             <nav>
@@ -575,24 +575,16 @@
                     <button class="btn btn-primary" id="google-login">
                         <i class="fab fa-google"></i>
                         تسجيل الدخول
-             <div id="g_id_onload"
-     data-client_id="1090239315703-sntlm10fmphk7sr03ddin0b6lipsb4hi.apps.googleusercontent.com"
-     data-context="signin"
-     data-ux_mode="popup"
-     data-callback="logincallback"
-     data-auto_prompt="false">
-</div>
+                    </button>
+                    <button class="btn btn-outline" id="user-profile" style="display: none;">
+                        <i class="fas fa-user"></i>
+                        <span id="username">المستخدم</span>
+                    </button>
+                </div>
+            </nav>
+        </div>
+    </header>
 
-<div class="g_id_signin"
-     data-type="standard"
-     data-shape="pill"
-     data-theme="filled_black"
-     data-text="signin_with"
-     data-size="large"
-     data-logo_alignment="left">
-</div>
-
-    <!-- الصفحة الرئيسية -->
     <section class="hero">
         <div class="container">
             <h1>منصة متكاملة لتعلم البرمجة</h1>
@@ -635,7 +627,6 @@
         </div>
     </section>
 
-    <!-- قسم المحرر -->
     <section class="editor-section" id="editor-section">
         <div class="container">
             <h2 class="section-title">محرر الأكواد</h2>
@@ -677,7 +668,6 @@ console.log(greet("أحمد"));</code></pre>
         </div>
     </section>
 
-    <!-- الفوتر -->
     <footer>
         <div class="container">
             <div class="footer-content">
@@ -717,15 +707,45 @@ console.log(greet("أحمد"));</code></pre>
         </div>
     </footer>
 
-    <!-- إشعار -->
     <div class="notification" id="notification">
         <i class="fas fa-check-circle"></i>
         <span id="notification-text">تمت العملية بنجاح</span>
     </div>
 
+    <script src="https://accounts.google.com/gsi/client" async defer></script>
+    <div id="g_id_onload"
+        data-client_id="YOUR_CLIENT_ID"
+        data-context="signin"
+        data-ux_mode="popup"
+        data-callback="logincallback"
+        data-auto_prompt="false">
+    </div>
+
     <script>
+        // دالة يتم استدعاؤها من قبل مكتبة جوجل بعد نجاح تسجيل الدخول
+        function logincallback(response) {
+            // فك تشفير بيانات المستخدم من جوجل
+            const payload = JSON.parse(atob(response.credential.split('.')[1]));
+            
+            // جلب اسم المستخدم من البيانات
+            const userName = payload.name;
+            
+            // إخفاء زر تسجيل الدخول
+            document.getElementById('google-login').style.display = 'none';
+            
+            // إظهار زر الحساب وتحديث الاسم
+            const userProfileBtn = document.getElementById('user-profile');
+            userProfileBtn.style.display = 'flex';
+            document.getElementById('username').textContent = userName;
+            
+            // عرض إشعار بنجاح تسجيل الدخول
+            showNotification(`أهلاً بك، ${userName}!`);
+        }
+        
         // كود JavaScript للتفاعلية
         document.addEventListener('DOMContentLoaded', function() {
+            // ... (بقية كود JavaScript الخاص بك) ...
+            
             // جعل العناصر متحركة عند التمرير
             const animatedElements = document.querySelectorAll('.animated');
             
@@ -795,9 +815,9 @@ console.log(greet("أحمد"));</code></pre>
                 const editor = document.getElementById('code-editor');
                 
                 if (codeId === 'js-loop') {
-                    editor.value = `for (let i = 0; i < 5; i++) {\n  console.log("رقم: " + i);\n}`;
+                    editor.value = `for (let i = 0; i < 5; i++) {\n  console.log("رقم: " + i);\n}`;
                 } else if (codeId === 'js-function') {
-                    editor.value = `function greet(name) {\n  return "مرحباً " + name + "!";\n}\n\nconsole.log(greet("أحمد"));`;
+                    editor.value = `function greet(name) {\n  return "مرحباً " + name + "!";\n}\n\nconsole.log(greet("أحمد"));`;
                 }
                 
                 showNotification('تم إدراج الكود بنجاح');
@@ -834,17 +854,11 @@ console.log(greet("أحمد"));</code></pre>
                 }, 1500);
             });
             
-            // تسجيل الدخول بجوجل
+            // ** الجزء الجديد **
+            // تفعيل زر تسجيل الدخول المخصص
             document.getElementById('google-login').addEventListener('click', function() {
-                // محاكاة تسجيل الدخول
-                showNotification('جاري التوجيه إلى تسجيل الدخول باستخدام Google');
-                
-                setTimeout(() => {
-                    document.getElementById('google-login').style.display = 'none';
-                    document.getElementById('user-profile').style.display = 'flex';
-                    
-                    showNotification('تم تسجيل الدخول بنجاح');
-                }, 2000);
+                // استدعاء نافذة تسجيل الدخول المنبثقة من جوجل
+                google.accounts.id.prompt();
             });
             
             // وظيفة عرض الإشعارات
@@ -870,4 +884,3 @@ console.log(greet("أحمد"));</code></pre>
     </script>
 </body>
 </html>
-
