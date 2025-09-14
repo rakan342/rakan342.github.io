@@ -264,7 +264,7 @@
         
         .project-actions {
             display: flex;
-            gap: 15px;
+            gap: 10px;
         }
         
         .project-actions button {
@@ -275,111 +275,54 @@
             transition: color 0.3s;
             display: flex;
             align-items: center;
-            gap: 5px;
+            gap: 6px;
+            padding: 6px 10px;
+            border-radius: 8px;
         }
         
         .project-actions button:hover {
             color: var(--primary);
+            background: rgba(108,99,255,0.06);
         }
         
         .project-language {
-            background: rgba(76, 201, 240, 0.2);
+            background: rgba(76, 201, 240, 0.15);
             padding: 5px 10px;
             border-radius: 20px;
             font-size: 0.8rem;
             color: var(--success);
         }
-        
-        /* أنماط الفوتر */
-        footer {
-            background: rgba(26, 26, 46, 0.8);
-            padding: 40px 0;
-            margin-top: 80px;
-        }
-        
-        .footer-content {
-            display: flex;
-            justify-content: space-between;
-            flex-wrap: wrap;
-            gap: 40px;
-        }
-        
-        .footer-section {
-            flex: 1;
-            min-width: 250px;
-        }
-        
-        .footer-section h3 {
-            font-size: 1.3rem;
-            margin-bottom: 20px;
-            color: var(--primary);
-        }
-        
-        .footer-section p {
-            color: var(--gray);
-            line-height: 1.6;
-            margin-bottom: 20px;
-        }
-        
-        .footer-links {
-            list-style: none;
-        }
-        
-        .footer-links li {
-            margin-bottom: 15px;
-        }
-        
-        .footer-links a {
-            color: var(--gray);
-            text-decoration: none;
-            transition: color 0.3s;
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
-        
-        .footer-links a:hover {
-            color: var(--primary);
-        }
-        
-        .social-links {
-            display: flex;
-            gap: 15px;
-            margin-top: 20px;
-        }
-        
-        .social-links a {
-            display: flex;
-            align-items: center;
+
+        /* تعديل: نافذة التعديل وDialog الحذف */
+        .overlay {
+            display: none;
+            position: fixed;
+            inset: 0;
+            background: rgba(0,0,0,0.6);
             justify-content: center;
-            width: 40px;
-            height: 40px;
-            border-radius: 50%;
-            background: rgba(255, 255, 255, 0.1);
+            align-items: center;
+            z-index: 2000;
+        }
+        .overlay .box {
+            background: linear-gradient(180deg,#111 0%, #181824 100%);
+            padding: 20px;
+            border-radius: 12px;
+            width: 420px;
+            max-width: 95%;
             color: var(--light);
-            transition: all 0.3s;
+            border: 1px solid rgba(108,99,255,0.12);
         }
-        
-        .social-links a:hover {
-            background: var(--primary);
-            transform: translateY(-3px);
+        .overlay h3 { margin-bottom: 12px; color: var(--primary); }
+        .overlay .form-group { margin-bottom: 12px; }
+        .overlay .form-group label { display:block; margin-bottom:6px; color:var(--light); }
+        .overlay .form-group input, .overlay .form-group select {
+            width:100%; padding:10px; border-radius:8px; border:1px solid rgba(255,255,255,0.06); background: rgba(255,255,255,0.03); color:var(--light);
         }
-        
-        .copyright {
-            text-align: center;
-            margin-top: 40px;
-            padding-top: 20px;
-            border-top: 1px solid rgba(255, 255, 255, 0.1);
-            color: var(--gray);
-        }
-        
-        /* أنيميشنز */
-        @keyframes pulse {
-            0% { transform: scale(1); }
-            50% { transform: scale(1.1); }
-            100% { transform: scale(1); }
-        }
-        
+        .overlay .actions { display:flex; justify-content:flex-end; gap:10px; margin-top:10px; }
+        .btn-ghost { background: #6c757d; color:#fff; border:none; padding:8px 14px; border-radius:8px; cursor:pointer; }
+        .btn-danger { background: #dc3545; color:#fff; border:none; padding:8px 14px; border-radius:8px; cursor:pointer; }
+        .btn-save { background: var(--primary); color:#fff; border:none; padding:8px 14px; border-radius:8px; cursor:pointer; }
+
         /* تصميم متجاوب */
         @media (max-width: 992px) {
             .projects-grid {
@@ -518,35 +461,50 @@
                 </button>
             </div>
             
+            <!-- النموذج: حذفنا حقل الوصف كما طلبت، واضفنا نوع المشروع -->
             <div class="project-form" id="project-form" style="display: none;">
                 <h3>إنشاء مشروع جديد</h3>
                 <div class="form-group">
                     <label for="project-name">اسم المشروع</label>
                     <input type="text" id="project-name" placeholder="أدخل اسم المشروع">
                 </div>
+
                 <div class="form-group">
-                    <label for="project-desc">وصف المشروع</label>
-                    <textarea id="project-desc" placeholder="أدخل وصفاً للمشروع"></textarea>
+                    <label for="project-type">نوع المشروع</label>
+                    <select id="project-type">
+                        <option value="">اختر النوع</option>
+                        <option value="ويب">ويب</option>
+                        <option value="جوال">جوال</option>
+                        <option value="سطح المكتب">سطح المكتب</option>
+                    </select>
                 </div>
+
                 <div class="form-group">
                     <label for="project-lang">لغة البرمجة الرئيسية</label>
                     <select id="project-lang">
                         <option value="">اختر لغة البرمجة</option>
-                        <option value="html">HTML/CSS/JS</option>
-                        <option value="python">Python</option>
-                        <option value="cpp">C++</option>
-                        <option value="java">Java</option>
-                        <option value="php">PHP</option>
+                        <option value="HTML/CSS/JS">HTML/CSS/JS</option>
+                        <option value="Python">Python</option>
+                        <option value="C++">C++</option>
+                        <option value="Java">Java</option>
+                        <option value="PHP">PHP</option>
                     </select>
                 </div>
+
+                <div class="form-group">
+                    <label for="project-file">ملف التشغيل (اختياري)</label>
+                    <input type="text" id="project-file" placeholder="مثال: index.html — لو تحط اسم ملف سيتم تشغيله بزر التشغيل">
+                </div>
+
                 <div class="form-actions">
                     <button class="btn btn-outline" id="cancel-project">إلغاء</button>
                     <button class="btn btn-primary" id="submit-project">إنشاء</button>
                 </div>
             </div>
             
-            <div class="projects-grid">
-                <div class="project-card">
+            <div class="projects-grid" id="projects-grid">
+                <!-- احتفظت بكل البطاقات الأصلية مع إضافة زر تشغيل لكل واحدة -->
+                <div class="project-card" data-file="">
                     <div class="project-header">
                         <h3>متجر إلكتروني</h3>
                     </div>
@@ -570,15 +528,16 @@
                     </div>
                     <div class="project-footer">
                         <div class="project-actions">
-                            <button><i class="far fa-star"></i></button>
-                            <button><i class="far fa-edit"></i></button>
-                            <button><i class="far fa-trash-alt"></i></button>
+                            <button class="btn-fav" title="مفضلة"><i class="far fa-star"></i></button>
+                            <button class="btn-edit" title="تعديل"><i class="far fa-edit"></i></button>
+                            <button class="btn-delete" title="حذف"><i class="far fa-trash-alt"></i></button>
+                            <button class="btn-run" title="تشغيل"><i class="fas fa-play"></i></button>
                         </div>
                         <span class="project-language">HTML/CSS/JS</span>
                     </div>
                 </div>
                 
-                <div class="project-card">
+                <div class="project-card" data-file="">
                     <div class="project-header">
                         <h3>تطبيق الطقس</h3>
                     </div>
@@ -602,15 +561,16 @@
                     </div>
                     <div class="project-footer">
                         <div class="project-actions">
-                            <button><i class="far fa-star"></i></button>
-                            <button><i class="far fa-edit"></i></button>
-                            <button><i class="far fa-trash-alt"></i></button>
+                            <button class="btn-fav" title="مفضلة"><i class="far fa-star"></i></button>
+                            <button class="btn-edit" title="تعديل"><i class="far fa-edit"></i></button>
+                            <button class="btn-delete" title="حذف"><i class="far fa-trash-alt"></i></button>
+                            <button class="btn-run" title="تشغيل"><i class="fas fa-play"></i></button>
                         </div>
                         <span class="project-language">JavaScript</span>
                     </div>
                 </div>
                 
-                <div class="project-card">
+                <div class="project-card" data-file="">
                     <div class="project-header">
                         <h3>نظام إدارة المهام</h3>
                     </div>
@@ -634,15 +594,16 @@
                     </div>
                     <div class="project-footer">
                         <div class="project-actions">
-                            <button><i class="far fa-star"></i></button>
-                            <button><i class="far fa-edit"></i></button>
-                            <button><i class="far fa-trash-alt"></i></button>
+                            <button class="btn-fav" title="مفضلة"><i class="far fa-star"></i></button>
+                            <button class="btn-edit" title="تعديل"><i class="far fa-edit"></i></button>
+                            <button class="btn-delete" title="حذف"><i class="far fa-trash-alt"></i></button>
+                            <button class="btn-run" title="تشغيل"><i class="fas fa-play"></i></button>
                         </div>
                         <span class="project-language">Python</span>
                     </div>
                 </div>
-                
-                <div class="project-card">
+
+                <div class="project-card" data-file="">
                     <div class="project-header">
                         <h3>لعبة الذاكرة</h3>
                     </div>
@@ -666,15 +627,16 @@
                     </div>
                     <div class="project-footer">
                         <div class="project-actions">
-                            <button><i class="far fa-star"></i></button>
-                            <button><i class="far fa-edit"></i></button>
-                            <button><i class="far fa-trash-alt"></i></button>
+                            <button class="btn-fav" title="مفضلة"><i class="far fa-star"></i></button>
+                            <button class="btn-edit" title="تعديل"><i class="far fa-edit"></i></button>
+                            <button class="btn-delete" title="حذف"><i class="far fa-trash-alt"></i></button>
+                            <button class="btn-run" title="تشغيل"><i class="fas fa-play"></i></button>
                         </div>
                         <span class="project-language">JavaScript</span>
                     </div>
                 </div>
-                
-                <div class="project-card">
+
+                <div class="project-card" data-file="">
                     <div class="project-header">
                         <h3>مدونة شخصية</h3>
                     </div>
@@ -698,15 +660,16 @@
                     </div>
                     <div class="project-footer">
                         <div class="project-actions">
-                            <button><i class="far fa-star"></i></button>
-                            <button><i class="far fa-edit"></i></button>
-                            <button><i class="far fa-trash-alt"></i></button>
+                            <button class="btn-fav" title="مفضلة"><i class="far fa-star"></i></button>
+                            <button class="btn-edit" title="تعديل"><i class="far fa-edit"></i></button>
+                            <button class="btn-delete" title="حذف"><i class="far fa-trash-alt"></i></button>
+                            <button class="btn-run" title="تشغيل"><i class="fas fa-play"></i></button>
                         </div>
                         <span class="project-language">PHP</span>
                     </div>
                 </div>
-                
-                <div class="project-card">
+
+                <div class="project-card" data-file="">
                     <div class="project-header">
                         <h3>حاسبة علمية</h3>
                     </div>
@@ -730,9 +693,10 @@
                     </div>
                     <div class="project-footer">
                         <div class="project-actions">
-                            <button><i class="far fa-star"></i></button>
-                            <button><i class="far fa-edit"></i></button>
-                            <button><i class="far fa-trash-alt"></i></button>
+                            <button class="btn-fav" title="مفضلة"><i class="far fa-star"></i></button>
+                            <button class="btn-edit" title="تعديل"><i class="far fa-edit"></i></button>
+                            <button class="btn-delete" title="حذف"><i class="far fa-trash-alt"></i></button>
+                            <button class="btn-run" title="تشغيل"><i class="fas fa-play"></i></button>
                         </div>
                         <span class="project-language">C++</span>
                     </div>
@@ -781,92 +745,260 @@
         </div>
     </footer>
 
+    <!-- نافذة التعديل (اسم + لغة + نوع فقط) -->
+    <div class="overlay" id="editOverlay">
+        <div class="box">
+            <h3>تعديل المشروع</h3>
+            <div class="form-group">
+                <label for="editName">اسم المشروع</label>
+                <input id="editName" type="text">
+            </div>
+            <div class="form-group">
+                <label for="editType">نوع المشروع</label>
+                <select id="editType">
+                    <option value="ويب">ويب</option>
+                    <option value="جوال">جوال</option>
+                    <option value="سطح المكتب">سطح المكتب</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="editLang">لغة البرمجة</label>
+                <select id="editLang">
+                    <option value="HTML/CSS/JS">HTML/CSS/JS</option>
+                    <option value="Python">Python</option>
+                    <option value="C++">C++</option>
+                    <option value="Java">Java</option>
+                    <option value="PHP">PHP</option>
+                </select>
+            </div>
+            <div class="actions">
+                <button class="btn-ghost" id="closeEdit">إغلاق</button>
+                <button class="btn-save" id="saveEdit">حفظ</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Dialog تأكيد الحذف -->
+    <div class="overlay" id="deleteOverlay">
+        <div class="box">
+            <p style="text-align:center">هل أنت متأكد من أنك تريد حذف هذا المشروع؟</p>
+            <div class="actions" style="justify-content:space-between;">
+                <button class="btn-ghost" id="closeDelete">إغلاق</button>
+                <button class="btn-danger" id="confirmDelete">حذف</button>
+            </div>
+        </div>
+    </div>
+
     <script>
-        // كود JavaScript للتفاعلية
+        // كود JS: التعديلات المطلوبة
         document.addEventListener('DOMContentLoaded', function() {
-            // تسجيل الدخول بجوجل
+            // محاكاة تسجيل الدخول
             document.getElementById('google-login').addEventListener('click', function() {
-                // محاكاة تسجيل الدخول
                 alert('سيتم توجيهك إلى صفحة تسجيل الدخول باستخدام Google');
-                
                 document.getElementById('google-login').style.display = 'none';
                 document.getElementById('user-profile').style.display = 'flex';
             });
-            
+
             // إظهار/إخفاء نموذج المشروع
             const createProjectBtn = document.getElementById('create-project-btn');
             const projectForm = document.getElementById('project-form');
             const cancelProjectBtn = document.getElementById('cancel-project');
-            
+
             createProjectBtn.addEventListener('click', function() {
                 const isLoggedIn = document.getElementById('user-profile').style.display !== 'none';
-                
                 if (!isLoggedIn) {
                     alert('يجب تسجيل الدخول أولاً لإنشاء مشروع');
                     return;
                 }
-                
                 projectForm.style.display = projectForm.style.display === 'none' ? 'block' : 'none';
             });
-            
+
             cancelProjectBtn.addEventListener('click', function() {
                 projectForm.style.display = 'none';
             });
-            
-            // إرسال المشروع
+
+            // إنشاء مشروع جديد: بدون وصف كما طلبت
             document.getElementById('submit-project').addEventListener('click', function() {
-                const name = document.getElementById('project-name').value;
-                const desc = document.getElementById('project-desc').value;
+                const name = document.getElementById('project-name').value.trim();
                 const lang = document.getElementById('project-lang').value;
-                
-                if (!name || !desc || !lang) {
-                    alert('يرجى ملء جميع الحقول المطلوبة');
+                const type = document.getElementById('project-type').value;
+                const file = document.getElementById('project-file').value.trim(); // اسم ملف التشغيل اختياري
+
+                if (!name || !lang || !type) {
+                    alert('يرجى ملء جميع الحقول المطلوبة (الاسم، النوع، اللغة)');
                     return;
                 }
-                
-                alert('تم إنشاء المشروع بنجاح!');
-                projectForm.style.display = 'none';
-                
-                // مسح الحقول
+
+                // بناء بطاقة المشروع جديدة
+                const card = document.createElement('div');
+                card.className = 'project-card';
+                if (file) card.setAttribute('data-file', file);
+                else card.setAttribute('data-file', '');
+
+                card.innerHTML = `
+                    <div class="project-header"><h3>${escapeHtml(name)}</h3></div>
+                    <div class="project-body">
+                        <p>لا يوجد وصف (تم حذفه).</p>
+                        <div class="project-stats">
+                            <div class="stat"><i class="far fa-file-code"></i><span>0 ملف</span></div>
+                            <div class="stat"><i class="far fa-clock"></i><span>0 يوم</span></div>
+                            <div class="stat"><i class="fas fa-code-branch"></i><span>0 commit</span></div>
+                        </div>
+                    </div>
+                    <div class="project-footer">
+                        <div class="project-actions">
+                            <button class="btn-fav" title="مفضلة"><i class="far fa-star"></i></button>
+                            <button class="btn-edit" title="تعديل"><i class="far fa-edit"></i></button>
+                            <button class="btn-delete" title="حذف"><i class="far fa-trash-alt"></i></button>
+                            <button class="btn-run" title="تشغيل"><i class="fas fa-play"></i></button>
+                        </div>
+                        <span class="project-language">${escapeHtml(lang)}</span>
+                    </div>
+                `;
+                document.getElementById('projects-grid').prepend(card);
+
+                // مسح الحقول وإخفاء الفورم
                 document.getElementById('project-name').value = '';
-                document.getElementById('project-desc').value = '';
                 document.getElementById('project-lang').value = '';
+                document.getElementById('project-type').value = '';
+                document.getElementById('project-file').value = '';
+                projectForm.style.display = 'none';
             });
-            
-            // تفاعل الأزرار (التفضيل، التعديل، الحذف)
-            const actionButtons = document.querySelectorAll('.project-actions button');
-            actionButtons.forEach(button => {
-                button.addEventListener('click', function() {
-                    const isLoggedIn = document.getElementById('user-profile').style.display !== 'none';
-                    
-                    if (!isLoggedIn) {
-                        alert('يجب تسجيل الدخول أولاً لإدارة المشاريع');
-                        return;
-                    }
-                    
-                    const icon = this.querySelector('i');
-                    if (icon.classList.contains('far') && icon.classList.contains('fa-star')) {
-                        icon.classList.replace('far', 'fas');
-                        this.style.color = 'var(--primary)';
-                    } else if (icon.classList.contains('fas') && icon.classList.contains('fa-star')) {
-                        icon.classList.replace('fas', 'far');
-                        this.style.color = 'var(--gray)';
-                    } else if (icon.classList.contains('fa-trash-alt')) {
-                        if (confirm('هل أنت متأكد من حذف هذا المشروع؟')) {
-                            this.closest('.project-card').remove();
-                        }
-                    } else if (icon.classList.contains('fa-edit')) {
-                        alert('سيتم فتح محرر المشروع');
-                    }
+
+            // دالة هروب للأحرف لتفادي مشاكل HTML عند الإدراج
+            function escapeHtml(text) {
+                return text.replace(/[&<>"']/g, function(m) {
+                    return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[m];
                 });
+            }
+
+            // تفويض أحداث: تفضيل، تعديل، حذف، تشغيل
+            const projectsGrid = document.getElementById('projects-grid');
+            let targetCardForDelete = null;
+            let targetCardForEdit = null;
+
+            projectsGrid.addEventListener('click', function(e) {
+                const btn = e.target.closest('button');
+                if (!btn) return;
+                const card = btn.closest('.project-card');
+                if (!card) return;
+
+                // مفضلة
+                if (btn.classList.contains('btn-fav')) {
+                    const icon = btn.querySelector('i');
+                    if (icon.classList.contains('far')) {
+                        icon.classList.replace('far','fas');
+                        btn.style.color = 'var(--primary)';
+                    } else {
+                        icon.classList.replace('fas','far');
+                        btn.style.color = '';
+                    }
+                    return;
+                }
+
+                // تعديل (اسم - لغة - نوع) فقط
+                if (btn.classList.contains('btn-edit')) {
+                    const titleEl = card.querySelector('.project-header h3');
+                    const langEl = card.querySelector('.project-language');
+                    // تعيين القيم في نافذة التعديل
+                    document.getElementById('editName').value = titleEl ? titleEl.innerText : '';
+                    // اختيار اللغة المطابقة لو وجدت خيار مطابق
+                    const curLang = langEl ? langEl.innerText : '';
+                    const editLang = document.getElementById('editLang');
+                    for (let i=0;i<editLang.options.length;i++){
+                        if (editLang.options[i].value.toLowerCase() === curLang.toLowerCase()){
+                            editLang.selectedIndex = i; break;
+                        }
+                    }
+                    // نوع: نحاول أخذ النوع من نص داخل الـ card (لو موجود)
+                    // إذا ما فيه نوع سابق، نخلي الافتراضي "ويب"
+                    const editType = document.getElementById('editType');
+                    // مافيه مكان واضح لنوع في الكارتات القديمة، فنخلي القيمة الحالية من dataset لو موجود
+                    const curType = card.getAttribute('data-type') || 'ويب';
+                    for (let i=0;i<editType.options.length;i++){
+                        if (editType.options[i].value === curType) { editType.selectedIndex = i; break; }
+                    }
+
+                    targetCardForEdit = card;
+                    document.getElementById('editOverlay').style.display = 'flex';
+                    return;
+                }
+
+                // حذف -> فتح Dialog تأكيد
+                if (btn.classList.contains('btn-delete')) {
+                    targetCardForDelete = card;
+                    document.getElementById('deleteOverlay').style.display = 'flex';
+                    return;
+                }
+
+                // تشغيل المشروع
+                if (btn.classList.contains('btn-run')) {
+                    const file = card.getAttribute('data-file') || '';
+                    if (file && file.trim() !== '') {
+                        // نفتح الملف في نافذة جديدة - المستخدم مسؤول عن وجود الملف في المسار الصحيح
+                        window.open(file, '_blank');
+                    } else {
+                        alert('لا يوجد ملف تشغيل لهذا المشروع. ضع اسم الملف في خانة "ملف التشغيل" عند إنشاء المشروع.');
+                    }
+                    return;
+                }
             });
-            
-            // تبديل الفلاتر
+
+            // إغلاق نافذة التعديل
+            document.getElementById('closeEdit').addEventListener('click', function(){
+                document.getElementById('editOverlay').style.display = 'none';
+                targetCardForEdit = null;
+            });
+
+            // حفظ التعديل (اسم - لغة - نوع)
+            document.getElementById('saveEdit').addEventListener('click', function(){
+                if (!targetCardForEdit) {
+                    document.getElementById('editOverlay').style.display = 'none';
+                    return;
+                }
+                const newName = document.getElementById('editName').value.trim();
+                const newLang = document.getElementById('editLang').value;
+                const newType = document.getElementById('editType').value;
+
+                if (!newName || !newLang || !newType) {
+                    alert('يرجى ملء الاسم، النوع، واللغة');
+                    return;
+                }
+
+                // تطبيق التعديلات على البطاقة (مسموح فقط الاسم + اللغة + النوع)
+                const titleEl = targetCardForEdit.querySelector('.project-header h3');
+                const langEl = targetCardForEdit.querySelector('.project-language');
+                if (titleEl) titleEl.innerText = newName;
+                if (langEl) langEl.innerText = newLang;
+                // نخزن النوع في data-type حتى نحتفظ به
+                targetCardForEdit.setAttribute('data-type', newType);
+
+                document.getElementById('editOverlay').style.display = 'none';
+                targetCardForEdit = null;
+            });
+
+            // إغلاق Dialog الحذف
+            document.getElementById('closeDelete').addEventListener('click', function(){
+                document.getElementById('deleteOverlay').style.display = 'none';
+                targetCardForDelete = null;
+            });
+
+            // تأكيد الحذف (زر أحمر)
+            document.getElementById('confirmDelete').addEventListener('click', function(){
+                if (targetCardForDelete) {
+                    targetCardForDelete.remove();
+                    targetCardForDelete = null;
+                }
+                document.getElementById('deleteOverlay').style.display = 'none';
+            });
+
+            // تبديل الفلاتر (عرض بصري فقط الآن)
             const filterButtons = document.querySelectorAll('.filter-btn');
             filterButtons.forEach(button => {
                 button.addEventListener('click', function() {
                     filterButtons.forEach(btn => btn.classList.remove('active'));
                     this.classList.add('active');
+                    // لو تحب أطبق فلترة فعلية على النوع أقدر أضيفها بعدين
                 });
             });
         });
